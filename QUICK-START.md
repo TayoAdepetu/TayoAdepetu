@@ -4,6 +4,76 @@
 
 The development server is running at: **http://localhost:3000**
 
+## 🧱 Tech Stack
+
+- **Framework:** Next.js 14+ (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4
+- **Content:** MDX for articles
+- **Deployment:** Ready for Vercel
+
+### Prerequisites
+
+- Node.js 18+ installed
+- npm or yarn package manager
+
+### Installation
+
+```bash
+git clone https://github.com/TayoAdepetu/TayoAdepetu.git
+cd TayoAdepetu
+npm install
+npm run dev
+```
+
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🗂️ Project Structure
+
+```
+TayoAdepetu/
+├── .github/
+│   ├── assets/              # Images used by the GitHub profile README
+│   └── workflows/           # GitHub Actions (e.g. snake animation)
+├── app/                     # Next.js app directory
+│   ├── articles/[slug]/     # Individual article pages
+│   ├── layout.tsx           # Root layout with theme provider
+│   ├── page.tsx             # Homepage
+│   └── globals.css          # Global styles
+├── components/              # React components
+│   ├── Hero.tsx             # Hero section
+│   ├── About.tsx            # About section
+│   ├── Projects.tsx         # Projects showcase
+│   ├── Articles.tsx         # Articles listing
+│   ├── Contact.tsx          # Contact section
+│   ├── ThemeProvider.tsx    # Theme context provider
+│   └── ThemeToggle.tsx      # Dark/light mode toggle
+├── content/
+│   └── articles/            # MDX article files
+├── data/
+│   └── projects.ts          # Projects data
+├── lib/
+│   └── mdx.ts               # MDX utilities
+└── public/
+    ├── images/              # Image assets
+    └── resume.pdf           # Resume file
+```
+
+## ⚡ Performance Targets
+
+The site is optimized for performance:
+
+- Next.js Image component for optimized images
+- Server Components for reduced JavaScript
+- Tailwind CSS for minimal CSS bundle
+- MDX compiled at build time
+
+Target metrics:
+
+- Load time: < 2 seconds
+- Lighthouse score: > 90 across all metrics
+
+
 ## 📋 Immediate Next Steps
 
 ### 1. View Your Site (Right Now!)

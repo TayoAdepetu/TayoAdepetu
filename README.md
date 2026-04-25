@@ -1,176 +1,121 @@
-# Tayo Adepetu Portfolio
+<h1 align="center">
+  Hi, I am TheMarketingCoder!🕹️
+</h1>
 
-A minimalist, modern personal website built with Next.js 14+, TypeScript, and Tailwind CSS.
+<div align="center">
+<a href="https://www.instagram.com/themarketingcoder/"><img src=".github/assets/website.png" /></a>
+<a href="https://www.instagram.com/themarketingcoder/"><img src=".github/assets/instagram.png" /></a>
+<a href="https://www.linkedin.com/in/tayo-adepetu"><img src=".github/assets/linkedin.png" /></a>
+<a href="https://twitter.com/AdepetuTayo"><img src=".github/assets/twitter.png" /></a>
+</div>
 
-## Features
+<br />
 
-- ✨ Clean, minimalist design with dark/light mode
-- 📝 MDX-powered blog for articles
-- 🎨 Fully responsive and mobile-friendly
-- ⚡ Optimized for performance
-- 🔍 SEO-ready with proper meta tags
-- ♿ Accessible design (WCAG AA compliant)
+<h2>A Little Bit About Me</h2>
 
-## Tech Stack
+```yaml
 
-- **Framework:** Next.js 14+ (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS 4
-- **Content:** MDX for articles
-- **Deployment:** Ready for Vercel
+name: Tayo Adepetu (TheMarketingCoder)
 
-## Getting Started
+location: Lagos, Nigeria
 
-### Prerequisites
+current_job: Backend PHP/Laravel + VueJS/NuxtJS Developer and Marketing Coach
 
-- Node.js 18+ installed
-- npm or yarn package manager
+education: [
+    "Self-taught Web Developer and Marketing Coach",
+    "Bachelors in Economics",
+]
 
-### Installation
+technical_background: [
+    "Student - Harvard University's CS50 Introduction To Computer Science",
+    "Student - Web3Bridge's Blockchain and Smart Contract Developemnt Cohort X",
+]
 
-1. Clone the repository
-```bash
-git clone <repository-url>
-cd my-portfolio
+current_company: MakariosWorks Software Development Agency (Part-time)
+
+fields_of_interest: [
+    "Software Development",
+    "Marketing",
+    "Artificial Intelligence",
+    "Web3",
+    "How I Can Use All The Above To Help People Make More Money and Live More Convenient Lives"
+]
+
+currently_learning: ["Docker", "Kubernetes", "Microservices", "Unit Testing", "C", "Python"]
+
+2024_goals: ["Learning C, C++, C#, Python, and .NET", 
+"Continue Building My Marketing Platform - BizGrwothHackerz"
+]
+
+hobbies: ["Watching Movies", "Talking Politics", "Coding", "Writing About Marketing"]
+
 ```
+<br/>
+<h2>Some Tools I Use</h2>
 
-2. Install dependencies
-```bash
-npm install
-```
+<div align="center">
+<img width=76px; height=86px  src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" />
 
-3. Run the development server
-```bash
-npm run dev
-```
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" />
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
 
-## Project Structure
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" />
 
-```
-my-portfolio/
-├── app/                      # Next.js app directory
-│   ├── articles/[slug]/     # Individual article pages
-│   ├── layout.tsx           # Root layout with theme provider
-│   ├── page.tsx             # Homepage
-│   └── globals.css          # Global styles
-├── components/              # React components
-│   ├── Hero.tsx            # Hero section
-│   ├── About.tsx           # About section
-│   ├── Projects.tsx        # Projects showcase
-│   ├── Articles.tsx        # Articles listing
-│   ├── Contact.tsx         # Contact section
-│   ├── ThemeProvider.tsx   # Theme context provider
-│   └── ThemeToggle.tsx     # Dark/light mode toggle
-├── content/
-│   └── articles/           # MDX article files
-├── data/
-│   └── projects.ts         # Projects data
-├── lib/
-│   └── mdx.ts             # MDX utilities
-└── public/
-    ├── images/            # Image assets
-    └── resume.pdf         # Resume file
-```
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuetify/vuetify-original.svg" />
 
-## Adding Content
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nuxtjs/nuxtjs-original.svg" />
 
-### Adding a New Article
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original-wordmark.svg" />
 
-1. Create a new MDX file in `content/articles/`:
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" />
 
-```mdx
----
-title: "Your Article Title"
-date: "2024-01-15"
-excerpt: "Brief description of your article"
-readTime: "5 min read"
-tags: ["tag1", "tag2"]
----
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" />
 
-# Your Article Title
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" />
 
-Your article content here...
-```
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" />
 
-2. The article will automatically appear on the homepage and be accessible at `/articles/your-file-name`
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" />
+          
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg" />
 
-### Adding a New Project
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/heroku/heroku-original.svg" />
 
-Edit `data/projects.ts` and add a new project object:
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/digitalocean/digitalocean-original.svg" />
 
-```typescript
-{
-  id: 'project-id',
-  name: 'Project Name',
-  description: 'Project description',
-  tags: ['Next.js', 'TypeScript'],
-  link: 'https://project-url.com',
-  status: 'active',
-}
-```
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" />
 
-## Customization
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/capacitor/capacitor-plain-wordmark.svg" />
 
-### Update Personal Information
 
-1. **Social Links:** Edit `components/Hero.tsx` to update GitHub, LinkedIn, Twitter, and email links
-2. **About Section:** Modify `components/About.tsx` to reflect your bio
-3. **Profile Photo:** Replace `public/images/profile.jpg` with your photo
-4. **Resume:** Replace `public/resume.pdf` with your resume
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original-wordmark.svg" />
+          
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" />
 
-### Color Scheme
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" />
 
-The site uses a monochromatic color scheme defined in `app/globals.css`. You can modify:
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original-wordmark.svg" />
 
-- Light mode: `--background: #ffffff` and `--foreground: #171717`
-- Dark mode: `--background: #0a0a0a` and `--foreground: #ededed`
+<img width=76px; height=86px src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bitbucket/bitbucket-original-wordmark.svg" />
+                      
+                            
+</div>
 
-### Typography
+<br/>
 
-The site uses Inter font. To change it, update `app/layout.tsx`:
+<div style="display: flex; justify-content: space-between;">
 
-```typescript
-import { YourFont } from "next/font/google";
-```
+[![Tayo Adepetu's GitHub stats](https://github-readme-stats.vercel.app/api?username=TayoAdepetu&show_icons=true&theme=highcontrast)](https://github.com/TayoAdepetu/github-readme-stats)
 
-## Deployment
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=TayoAdepetu&langs_count=10&layout=compact)](https://github.com/TayoAdepetu/github-readme-stats)
 
-### Deploy to Vercel (Recommended)
+</div>
 
-1. Push your code to GitHub
-2. Import your repository on [Vercel](https://vercel.com)
-3. Vercel will automatically detect Next.js and deploy
+<br/>
 
-### Deploy to Netlify
-
-1. Push your code to GitHub
-2. Connect your repository on [Netlify](https://netlify.com)
-3. Build command: `npm run build`
-4. Publish directory: `.next`
-
-## Performance
-
-The site is optimized for performance:
-
-- Next.js Image component for optimized images
-- Server Components for reduced JavaScript
-- Tailwind CSS for minimal CSS bundle
-- MDX compiled at build time
-
-Target metrics:
-- Load time: < 2 seconds
-- Lighthouse score: > 90 across all metrics
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Contact
-
-For questions or feedback, reach out to [tayo@tayoadepetu.com](mailto:tayo@tayoadepetu.com).
+![Snake animation](https://raw.githubusercontent.com/TayoAdepetu/TayoAdepetu/output/github-contribution-grid-snake.svg)
 
 ---
 
-Built with ❤️ using Next.js and TypeScript
+<sub>This repository also hosts the source code for my personal portfolio website built with Next.js. See [QUICK-START.md](QUICK-START.md) for dev setup, and [PROJECT.md](PROJECT.md), [CUSTOMIZATION.md](CUSTOMIZATION.md) and [DEPLOYMENT.md](DEPLOYMENT.md) for project docs.</sub>
