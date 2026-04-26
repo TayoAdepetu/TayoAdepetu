@@ -13,21 +13,26 @@ export interface ArticleFrontmatter {
   slug: string;
 }
 
-export function getArticleSlugs() {
+export interface ArticleData {
+  frontmatter: ArticleFrontmatter;
+  content: string;
+}
+
+export function getArticleSlugs(): string[] {
   try {
     if (!fs.existsSync(articlesDirectory)) {
       return [];
     }
     return fs.readdirSync(articlesDirectory).filter((file) => file.endsWith('.mdx'));
-  } catch (error) {
+  } catch {
     return [];
   }
 }
 
-export function getArticleBySlug(slug: string): {
-  frontmatter: ArticleFrontmatter;
-  content: string;
-} {
+/**
+ * Throws if the article cannot be found. Prefer getArticleBySlugSafe in pages.
+ */
+export function getArticleBySlug(slug: string): ArticleData {
   const realSlug = slug.replace(/\.mdx$/, '');
   const fullPath = path.join(articlesDirectory, `${realSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -42,6 +47,17 @@ export function getArticleBySlug(slug: string): {
   };
 }
 
+/**
+ * Safe variant — returns null instead of throwing.
+ */
+export function getArticleBySlugSafe(slug: string): ArticleData | null {
+  try {
+    return getArticleBySlug(slug);
+  } catch {
+    return null;
+  }
+}
+
 export function getAllArticles(): ArticleFrontmatter[] {
   const slugs = getArticleSlugs();
   const articles = slugs
@@ -54,4 +70,3 @@ export function getAllArticles(): ArticleFrontmatter[] {
     });
   return articles;
 }
-

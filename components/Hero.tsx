@@ -1,89 +1,191 @@
 'use client';
 
-import Image from 'next/image';
-import { Github, Linkedin, Twitter, Mail, FileDown } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
+import { motion } from 'motion/react';
+import { ArrowRight, Sparkles, FileDown, Star } from 'lucide-react';
+import { useContact } from './contact/ContactProvider';
+import { site } from '@/data/site';
 
 export function Hero() {
+  const { open } = useContact();
+  const [profileLoaded, setProfileLoaded] = useState(false);
+  const [profileError, setProfileError] = useState(false);
+
   return (
-    <section className="min-h-[90vh] flex items-center justify-center px-6 py-20">
-      <div className="max-w-4xl mx-auto text-center">
-        <div className="mb-8 relative w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-neutral-200 dark:border-neutral-800">
-          <Image
-            src="/images/profile.jpg"
-            alt="Tayo Adepetu"
-            fill
-            className="object-cover"
-            priority
-            onError={(e) => {
-              // Fallback to a placeholder if image not found
-              e.currentTarget.style.display = 'none';
-            }}
-          />
-          <div className="absolute inset-0 bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center text-6xl font-bold text-neutral-400">
-            TA
-          </div>
+    <section className="relative min-h-[92vh] flex items-center pt-24 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Ambient backgrounds */}
+      <div className="absolute inset-0 bg-radial-glow pointer-events-none" />
+      <div className="absolute inset-0 bg-grid opacity-50 pointer-events-none [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
+
+      {/* Floating blue orbs */}
+      <div className="pointer-events-none absolute -top-20 -left-20 h-72 w-72 rounded-full bg-brand-500/20 blur-3xl animate-float" />
+      <div
+        className="pointer-events-none absolute bottom-10 -right-20 h-96 w-96 rounded-full bg-brand-600/15 blur-3xl animate-float"
+        style={{ animationDelay: '2s' }}
+      />
+
+      <div className="relative max-w-7xl mx-auto w-full grid lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 items-center">
+        {/* Left: copy */}
+        <div>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-500/30 bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-xs font-medium mb-6"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500" />
+            </span>
+            Available for new projects · 2026
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.05 }}
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.05] text-slate-900 dark:text-slate-50"
+          >
+            I build software that ships, <br className="hidden sm:block" />
+            and <span className="text-gradient-brand">SEO that ranks.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="mt-6 text-lg lg:text-xl text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed"
+          >
+            I&apos;m <span className="font-semibold text-slate-900 dark:text-slate-100">Tayo Adepetu</span> — a{' '}
+            <span className="font-semibold text-brand-700 dark:text-brand-300">Top-rated Plus</span> full-stack
+            engineer and former copywriter / SEO specialist. For 4+ years I&apos;ve helped founders in Nigeria, the
+            US, UK, and Australia take ideas from conceptualisation to launch — and get them ranked on Google.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
+          >
+            <button
+              onClick={() => open()}
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-xl shadow-brand-600/30 hover:shadow-brand-600/50 transition-all hover:-translate-y-0.5"
+            >
+              <Sparkles className="h-4 w-4" />
+              Start a project
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </button>
+            <Link
+              href="/projects"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-semibold transition-colors"
+            >
+              View past work
+            </Link>
+            <a
+              href="/tayo-adepetu-resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors"
+            >
+              <FileDown className="h-4 w-4" />
+              Resume
+            </a>
+          </motion.div>
+
+          {/* Quick stats strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl"
+          >
+            <QuickStat value={site.upworkStats.completedProjects} label="Projects delivered" />
+            <QuickStat value={site.upworkStats.successRate} label="Job success" />
+            <QuickStat value={site.upworkStats.rank} label="Upwork rank" />
+            <QuickStat value={site.upworkStats.deliveryTime} label="Delivery window" />
+          </motion.div>
         </div>
 
-        <h1 className="text-5xl md:text-6xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
-          Tayo Adepetu
-        </h1>
-        
-        <p className="text-2xl md:text-3xl font-medium mb-6 text-neutral-700 dark:text-neutral-300">
-          Software Engineer
-        </p>
-        
-        <p className="text-lg md:text-xl mb-10 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-          Engineer. Writer. Mentor. Builder. Crafting thoughtful solutions and sharing insights on freelancing, tech, and professional growth.
-        </p>
-
-        <div className="flex justify-center gap-4 mb-8 flex-wrap">
-          <a
-            href="https://github.com/tayoadepetu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            aria-label="GitHub"
-          >
-            <Github className="h-6 w-6 text-neutral-700 dark:text-neutral-300" />
-          </a>
-          <a
-            href="https://linkedin.com/in/tayoadepetu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="h-6 w-6 text-neutral-700 dark:text-neutral-300" />
-          </a>
-          <a
-            href="https://twitter.com/tayoadepetu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            aria-label="Twitter"
-          >
-            <Twitter className="h-6 w-6 text-neutral-700 dark:text-neutral-300" />
-          </a>
-          <a
-            href="mailto:tayo@tayoadepetu.com"
-            className="p-3 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            aria-label="Email"
-          >
-            <Mail className="h-6 w-6 text-neutral-700 dark:text-neutral-300" />
-          </a>
-        </div>
-
-        <a
-          href="/resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 rounded-lg hover:bg-neutral-700 dark:hover:bg-neutral-300 transition-colors font-medium"
+        {/* Right: portrait card */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="relative mx-auto w-full max-w-md"
         >
-          <FileDown className="h-5 w-5" />
-          Download Resume
-        </a>
+          <div className="relative">
+            {/* Glow */}
+            <div className="absolute -inset-6 bg-gradient-to-br from-brand-500 via-brand-600 to-brand-800 rounded-[2rem] blur-3xl opacity-30" />
+
+            <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl">
+              <div className="aspect-[4/5] relative bg-gradient-to-br from-brand-100 via-brand-50 to-white dark:from-brand-950 dark:via-slate-900 dark:to-slate-900">
+                {/* Portrait image — uses plain img with graceful fallback */}
+                {!profileError && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src="/images/profile.jpg"
+                    alt="Tayo Adepetu"
+                    onLoad={() => setProfileLoaded(true)}
+                    onError={() => setProfileError(true)}
+                    className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${profileLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  />
+                )}
+                {(profileError || !profileLoaded) && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span className="text-[9rem] leading-none font-black bg-gradient-to-br from-brand-500 to-brand-800 bg-clip-text text-transparent select-none">
+                      TA
+                    </span>
+                    <span className="mt-3 text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                      {profileError ? 'Add profile.jpg to /public/images' : 'Loading…'}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Floating cards */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="absolute top-5 -left-4 sm:-left-6 bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xl p-3 flex items-center gap-3"
+              >
+                <div className="h-9 w-9 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center">
+                  <Star className="h-4 w-4 text-emerald-600 dark:text-emerald-400 fill-current" />
+                </div>
+                <div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Upwork</div>
+                  <div className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                    Top-rated Plus
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                className="absolute bottom-5 -right-4 sm:-right-6 bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xl p-3"
+              >
+                <div className="text-xs text-slate-500 dark:text-slate-400">Success rate</div>
+                <div className="text-lg font-bold bg-gradient-to-r from-brand-500 to-brand-700 bg-clip-text text-transparent">
+                  100%
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
+function QuickStat({ value, label }: { value: string; label: string }) {
+  return (
+    <div>
+      <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50">{value}</div>
+      <div className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">{label}</div>
+    </div>
+  );
+}

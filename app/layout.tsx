@@ -1,34 +1,62 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { Navigation } from '@/components/Navigation';
+import { Footer } from '@/components/Footer';
+import { ContactProvider } from '@/components/contact/ContactProvider';
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  title: "Tayo Adepetu - Software Engineer",
-  description: "Portfolio of Tayo Adepetu, a Top Rated Plus Software Engineer specializing in building meaningful products. Former content writer turned engineer, mentor to freelancers.",
-  keywords: ["Tayo Adepetu", "Software Engineer", "Freelancer", "Upwork", "Web Development", "Next.js", "TypeScript"],
-  authors: [{ name: "Tayo Adepetu" }],
+  metadataBase: new URL('https://tayoadepetu.com'),
+  title: {
+    default: 'Tayo Adepetu — Software Engineer & SEO Specialist',
+    template: '%s · Tayo Adepetu',
+  },
+  description:
+    'Tayo Adepetu — Top-rated Plus software engineer and SEO specialist helping individuals and businesses in Nigeria, the US, UK, and Australia ship and rank great products.',
+  keywords: [
+    'Tayo Adepetu',
+    'Software Engineer Nigeria',
+    'Full-stack Developer',
+    'SEO Specialist',
+    'Upwork Top Rated Plus',
+    'Mobile App Development',
+    'Website Development',
+    'Chrome Extension Development',
+    'AI Software',
+    'WhatsApp API',
+    'Escrow App',
+    'Next.js',
+    'Laravel',
+    'React Native',
+  ],
+  authors: [{ name: 'Tayo Adepetu' }],
+  creator: 'Tayo Adepetu',
   openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://tayoadepetu.com",
-    siteName: "Tayo Adepetu",
-    title: "Tayo Adepetu - Software Engineer",
-    description: "Portfolio of Tayo Adepetu, a Top Rated Plus Software Engineer specializing in building meaningful products.",
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://tayoadepetu.com',
+    siteName: 'Tayo Adepetu',
+    title: 'Tayo Adepetu — Software Engineer & SEO Specialist',
+    description:
+      'Top-rated Plus software engineer and SEO specialist helping individuals and businesses worldwide ship and rank great products.',
+    images: ['/upwork-profile.png'],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Tayo Adepetu - Software Engineer",
-    description: "Portfolio of Tayo Adepetu, a Top Rated Plus Software Engineer specializing in building meaningful products.",
-    creator: "@tayoadepetu",
+    card: 'summary_large_image',
+    title: 'Tayo Adepetu — Software Engineer & SEO Specialist',
+    description:
+      'Top-rated Plus software engineer and SEO specialist helping individuals and businesses worldwide ship and rank great products.',
+    creator: '@tayoadepetu',
+    images: ['/upwork-profile.png'],
   },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -38,15 +66,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${inter.variable} antialiased bg-background text-foreground`}>
         <ThemeProvider>
-          <div className="fixed top-6 right-6 z-50">
-            <ThemeToggle />
-          </div>
-          {children}
-          <footer className="py-8 px-6 text-center text-neutral-600 dark:text-neutral-400 border-t border-neutral-200 dark:border-neutral-800">
-            <p>&copy; {new Date().getFullYear()} Tayo Adepetu. All rights reserved.</p>
-          </footer>
+          <ContactProvider>
+            <Navigation />
+            {children}
+            <Footer />
+          </ContactProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,27 +1,90 @@
-import { Mail } from 'lucide-react';
+'use client';
+
+import { motion } from 'motion/react';
+import { Mail, Sparkles, Clock, Globe2 } from 'lucide-react';
+import { useContact } from './contact/ContactProvider';
+import { site } from '@/data/site';
 
 export function Contact() {
+  const { open } = useContact();
+
   return (
-    <section id="contact" className="py-20 px-6 bg-neutral-50 dark:bg-neutral-900/50">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-neutral-900 dark:text-neutral-100">
-          Get in Touch
-        </h2>
-        
-        <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8 max-w-2xl mx-auto">
-          I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. 
-          Whether you need help with a project or want to chat about freelancing, feel free to reach out.
-        </p>
-        
-        <a
-          href="mailto:tayo@tayoadepetu.com"
-          className="inline-flex items-center gap-2 px-8 py-4 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 rounded-lg hover:bg-neutral-700 dark:hover:bg-neutral-300 transition-colors font-medium text-lg"
+    <section id="contact" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6 }}
+          className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900 text-white p-8 sm:p-12 lg:p-16 shadow-2xl shadow-brand-900/40"
         >
-          <Mail className="h-5 w-5" />
-          Send me an email
-        </a>
+          <div className="absolute inset-0 bg-grid opacity-10" />
+          <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-brand-400/30 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-brand-300/20 blur-3xl" />
+
+          <div className="relative grid lg:grid-cols-[1.4fr_1fr] gap-10 items-center">
+            <div>
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white/15 backdrop-blur-md border border-white/20">
+                Let&apos;s build something
+              </span>
+              <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+                Got an idea? <br />
+                I&apos;ll help you ship it.
+              </h2>
+              <p className="mt-5 text-lg text-brand-50/90 max-w-xl leading-relaxed">
+                Whether you&apos;re a founder with a napkin sketch or a team with a clear spec — tell me what
+                you&apos;re building and when you need it. I&apos;ll come back within 24 hours with honest
+                feedback and next steps.
+              </p>
+
+              <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <button
+                  onClick={() => open()}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white text-brand-700 font-bold hover:bg-brand-50 transition-all hover:-translate-y-0.5 shadow-xl"
+                >
+                  <Sparkles className="h-4 w-4" />
+                  Start a project
+                </button>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-white/30 hover:bg-white/10 font-semibold transition-colors"
+                >
+                  <Mail className="h-4 w-4" />
+                  {site.email}
+                </a>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <InfoCard Icon={Clock} label="Typical delivery" value="5–7 weeks" />
+              <InfoCard Icon={Globe2} label="Working with clients in" value="Nigeria, US, UK, Australia & beyond" />
+              <InfoCard Icon={Mail} label="Email" value={site.email} />
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
+function InfoCard({
+  Icon,
+  label,
+  value,
+}: {
+  Icon: React.ElementType;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center gap-4 p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
+      <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-white/20 flex items-center justify-center">
+        <Icon className="h-5 w-5" />
+      </div>
+      <div>
+        <div className="text-xs uppercase tracking-wider text-brand-50/80">{label}</div>
+        <div className="font-semibold">{value}</div>
+      </div>
+    </div>
+  );
+}
