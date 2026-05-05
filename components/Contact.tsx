@@ -24,30 +24,30 @@ export function Contact() {
 
           <div className="relative grid lg:grid-cols-[1.4fr_1fr] gap-10 items-center">
             <div>
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white/15 backdrop-blur-md border border-white/20">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-white/15 backdrop-blur-md border border-white/20">
                 Let&apos;s build something
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+              <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
                 Got an idea? <br />
                 I&apos;ll help you ship it.
               </h2>
-              <p className="mt-5 text-lg text-brand-50/90 max-w-xl leading-relaxed">
-                Whether you&apos;re a founder with a napkin sketch or a team with a clear spec — tell me what
+              <p className="mt-4 text-base text-brand-50/90 max-w-xl leading-relaxed">
+                Whether you&apos;re a founder with a napkin sketch or a team with a clear spec, tell me what
                 you&apos;re building and when you need it. I&apos;ll come back within 24 hours with honest
                 feedback and next steps.
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <button
                   onClick={() => open()}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white text-brand-700 font-bold hover:bg-brand-50 transition-all hover:-translate-y-0.5 shadow-xl"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white text-brand-700 text-sm font-bold hover:bg-brand-50 transition-all hover:-translate-y-0.5 shadow-xl"
                 >
                   <Sparkles className="h-4 w-4" />
                   Start a project
                 </button>
                 <a
                   href={`mailto:${site.email}`}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-white/30 hover:bg-white/10 font-semibold transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-white/30 hover:bg-white/10 text-sm font-semibold transition-colors"
                 >
                   <Mail className="h-4 w-4" />
                   {site.email}
@@ -77,13 +77,13 @@ function InfoCard({
   value: string;
 }) {
   return (
-    <div className="flex items-center gap-4 p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
-      <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-white/20 flex items-center justify-center">
-        <Icon className="h-5 w-5" />
+    <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
+      <div className="flex-shrink-0 h-9 w-9 rounded-lg bg-white/20 flex items-center justify-center">
+        <Icon className="h-4 w-4" />
       </div>
       <div>
-        <div className="text-xs uppercase tracking-wider text-brand-50/80">{label}</div>
-        <div className="font-semibold">{value}</div>
+        <div className="text-[10px] uppercase tracking-wider text-brand-50/80">{label}</div>
+        <div className="text-sm font-semibold">{value}</div>
       </div>
     </div>
   );

@@ -164,37 +164,38 @@ body {
 }
 
 /* Prose styles */
-.prose { color: var(--foreground); }
+.prose { color: var(--foreground); font-size: 0.9375rem; line-height: 1.75; }
 .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
   color: var(--foreground);
   font-weight: 700;
-  margin-top: 2em;
-  margin-bottom: 1em;
+  margin-top: 1.75em;
+  margin-bottom: 0.75em;
   line-height: 1.3;
 }
-.prose h1 { font-size: 2.25em; }
-.prose h2 { font-size: 1.875em; }
-.prose h3 { font-size: 1.5em; }
-.prose p { margin-top: 1.25em; margin-bottom: 1.25em; line-height: 1.8; }
+.prose h1 { font-size: 1.75em; }
+.prose h2 { font-size: 1.4em; }
+.prose h3 { font-size: 1.2em; }
+.prose h4 { font-size: 1.05em; }
+.prose p { margin-top: 1em; margin-bottom: 1em; line-height: 1.75; }
 .prose a { color: var(--brand-600); text-decoration: underline; font-weight: 500; }
 .prose a:hover { color: var(--brand-700); }
 .prose strong { font-weight: 600; color: var(--foreground); }
-.prose code { background-color: #f3f4f6; padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.875em; font-weight: 500; }
+.prose code { background-color: #f3f4f6; padding: 0.18em 0.38em; border-radius: 0.25rem; font-size: 0.85em; font-weight: 500; }
 .dark .prose code { background-color: #0f172a; }
-.prose pre { background-color: #0b1220; color: #e5e7eb; padding: 1.5em; border-radius: 0.75rem; overflow-x: auto; margin: 1.75em 0; }
-.prose pre code { background-color: transparent; padding: 0; font-size: 0.875em; line-height: 1.7; color: inherit; }
-.prose ul, .prose ol { margin-top: 1.25em; margin-bottom: 1.25em; padding-left: 1.625em; }
-.prose li { margin-top: 0.5em; margin-bottom: 0.5em; }
+.prose pre { background-color: #0b1220; color: #e5e7eb; padding: 1.25em; border-radius: 0.75rem; overflow-x: auto; margin: 1.5em 0; font-size: 0.85em; }
+.prose pre code { background-color: transparent; padding: 0; font-size: 1em; line-height: 1.65; color: inherit; }
+.prose ul, .prose ol { margin-top: 1em; margin-bottom: 1em; padding-left: 1.5em; }
+.prose li { margin-top: 0.4em; margin-bottom: 0.4em; }
 .prose blockquote {
-  border-left: 4px solid var(--brand-500);
+  border-left: 3px solid var(--brand-500);
   padding-left: 1em;
   font-style: italic;
-  margin: 1.5em 0;
+  margin: 1.25em 0;
   color: #475569;
 }
 .dark .prose blockquote { color: #94a3b8; }
-.prose img { border-radius: 0.75rem; margin: 2em 0; }
-.prose hr { border-color: #e5e7eb; margin: 3em 0; }
+.prose img { border-radius: 0.75rem; margin: 1.75em 0; }
+.prose hr { border-color: #e5e7eb; margin: 2.5em 0; }
 .dark .prose hr { border-color: #1f2937; }
 
 /* Line clamp utility */

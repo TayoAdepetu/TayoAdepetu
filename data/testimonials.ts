@@ -64,6 +64,12 @@ export const testimonials: Testimonial[] = [
     alt: 'Upwork testimonial on an SEO engagement',
     category: 'seo',
   },
+  {
+    id: 'seo-04',
+    image: '/testimonials/seo-4.png',
+    alt: 'Upwork testimonial on an SEO engagement',
+    category: 'seo',
+  },
 
   // Content writing testimonials
   {
@@ -75,6 +81,12 @@ export const testimonials: Testimonial[] = [
   {
     id: 'cw-02',
     image: '/testimonials/content-writing-2.png',
+    alt: 'Upwork testimonial on a content writing project',
+    category: 'content-writing',
+  },
+  {
+    id: 'cw-03',
+    image: '/testimonials/content-writing-3.png',
     alt: 'Upwork testimonial on a content writing project',
     category: 'content-writing',
   },
@@ -96,7 +108,7 @@ export const testimonials: Testimonial[] = [
 
 export const categoryLabels: Record<TestimonialCategory, string> = {
   'software-engineering': 'Software Engineering',
-  seo: 'SEO',
+  'seo': 'SEO',
   'content-writing': 'Content Writing',
   'blog-writing': 'Blog Writing',
 };

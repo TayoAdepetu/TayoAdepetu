@@ -50,33 +50,33 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <article className="max-w-3xl mx-auto">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 mb-10 transition-colors"
+          className="inline-flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 mb-8 transition-colors"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-3.5 w-3.5" />
           Back to blog
         </Link>
 
-        <header className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-slate-50 leading-tight">
+        <header className="mb-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3.5 text-slate-900 dark:text-slate-50 leading-tight">
             {frontmatter.title}
           </h1>
 
-          <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-5">
+          <div className="flex items-center gap-3.5 text-[12.5px] text-slate-500 dark:text-slate-400 mb-4">
             <span className="flex items-center gap-1.5">
-              <Calendar className="h-4 w-4" />
+              <Calendar className="h-3.5 w-3.5" />
               {formattedDate}
             </span>
             <span className="flex items-center gap-1.5">
-              <Clock className="h-4 w-4" />
+              <Clock className="h-3.5 w-3.5" />
               {frontmatter.readTime}
             </span>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5">
             {frontmatter.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded"
+                className="px-2 py-0.5 text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded"
               >
                 {tag}
               </span>
@@ -84,7 +84,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
         </header>
 
-        <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
+        <div className="prose prose-neutral dark:prose-invert max-w-none">
           <MDXRemote source={content} />
         </div>
       </article>

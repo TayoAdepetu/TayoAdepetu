@@ -3,7 +3,7 @@ export const site = {
   title: 'Software Engineer & SEO Specialist',
   email: 'thetayoadepetu@gmail.com',
   phone: '+234 703 037 0756',
-  location: 'Lagos, Nigeria — serving clients globally',
+  location: 'Ibadan, Nigeria — serving clients globally',
   url: 'https://tayoadepetu.com',
 
   bio: 'Full-stack Software Engineer with 4+ years shipping production software, and a former copywriter & SEO specialist with receipts dating back to 2020. I help individuals and businesses — in Nigeria and globally (US, UK, Australia) — take products from conceptualisation to launch, and rank them on Google.',

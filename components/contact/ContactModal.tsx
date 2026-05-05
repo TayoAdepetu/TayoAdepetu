@@ -148,46 +148,46 @@ export function ContactModal({ isOpen, onClose, preselectedService }: ContactMod
             transition={{ type: 'spring', damping: 26, stiffness: 260 }}
             className="relative w-full sm:max-w-2xl max-h-[95vh] overflow-y-auto bg-white dark:bg-slate-900 sm:rounded-2xl rounded-t-2xl shadow-2xl border border-slate-200 dark:border-slate-800"
           >
-            <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+            <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-3.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50 flex items-center gap-2">
-                  <Mail className="h-5 w-5 text-brand-600" />
+                <h3 className="text-base font-semibold text-slate-900 dark:text-slate-50 flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-brand-600" />
                   Start a project
                 </h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-[12.5px] text-slate-500 dark:text-slate-400">
                   Tell me what you&apos;re building — I&apos;ll reply within 24 hours.
                 </p>
               </div>
               <button
                 onClick={onClose}
-                className="rounded-full p-2 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="rounded-full p-1.5 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 aria-label="Close"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
             {status === 'success' ? (
-              <div className="px-6 py-12 text-center">
-                <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center">
-                  <CheckCircle2 className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+              <div className="px-6 py-10 text-center">
+                <div className="mx-auto mb-3 h-14 w-14 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center">
+                  <CheckCircle2 className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
                 </div>
-                <h4 className="text-xl font-semibold mb-2 text-slate-900 dark:text-slate-50">
+                <h4 className="text-lg font-semibold mb-1.5 text-slate-900 dark:text-slate-50">
                   Message sent
                 </h4>
-                <p className="text-slate-600 dark:text-slate-400 max-w-sm mx-auto">
+                <p className="text-sm text-slate-600 dark:text-slate-400 max-w-sm mx-auto">
                   Thanks {fullName.split(' ')[0] || 'there'} — I&apos;ll reply to{' '}
                   <strong>{email}</strong> within 24 hours.
                 </p>
                 <button
                   onClick={onClose}
-                  className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-medium transition-colors"
+                  className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium transition-colors"
                 >
                   Close
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="px-6 py-6 space-y-5">
+              <form onSubmit={handleSubmit} className="px-5 py-5 space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Field label="Full name" htmlFor="contact-name">
                     <input
@@ -239,13 +239,13 @@ export function ContactModal({ isOpen, onClose, preselectedService }: ContactMod
                     rows={10}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className={`${inputClass} font-mono text-[13px] leading-relaxed`}
+                    className={`${inputClass} font-mono text-[12.5px] leading-relaxed`}
                   />
                 </Field>
 
                 {status === 'error' && errorMessage && (
-                  <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-sm">
-                    <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-[13px]">
+                    <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-medium">Couldn&apos;t send through the site.</p>
                       <p className="mt-1">
@@ -266,7 +266,7 @@ export function ContactModal({ isOpen, onClose, preselectedService }: ContactMod
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {status === 'sending' ? (
                       <>
@@ -283,14 +283,14 @@ export function ContactModal({ isOpen, onClose, preselectedService }: ContactMod
 
                   <a
                     href={mailtoHref}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 text-slate-700 dark:text-slate-300 font-medium transition-colors"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 text-slate-700 dark:text-slate-300 text-sm font-medium transition-colors"
                   >
                     <Mail className="h-4 w-4" />
                     Or open in email app
                   </a>
                 </div>
 
-                <p className="text-xs text-slate-500 dark:text-slate-500 pt-1">
+                <p className="text-[11px] text-slate-500 dark:text-slate-500 pt-1">
                   By submitting this form you agree I can contact you at the email you provided.
                 </p>
               </form>
@@ -303,7 +303,7 @@ export function ContactModal({ isOpen, onClose, preselectedService }: ContactMod
 }
 
 const inputClass =
-  'w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow';
+  'w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-[13px] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow';
 
 function Field({
   label,
@@ -318,11 +318,11 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={htmlFor} className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
+      <label htmlFor={htmlFor} className="block text-[13px] font-medium text-slate-700 dark:text-slate-300 mb-1.5">
         {label}
       </label>
       {children}
-      {helper && <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-500">{helper}</p>}
+      {helper && <p className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-500">{helper}</p>}
     </div>
   );
 }

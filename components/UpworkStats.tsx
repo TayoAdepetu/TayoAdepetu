@@ -25,13 +25,13 @@ export function UpworkStats() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
             Verified track record
           </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-50 leading-tight">
+          <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-50 leading-tight">
             Six years on Upwork. <span className="text-gradient-brand">Zero bad reviews.</span>
           </h2>
-          <p className="mt-5 text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
+          <p className="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
             My Upwork profile has been earning top-rated badges since 2020 — first as a copywriter and SEO
             specialist, and for the last four years as a full-stack engineer. Every stat below is verified
             and public on my{' '}
@@ -57,9 +57,9 @@ export function UpworkStats() {
                 className="relative overflow-hidden p-5 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-brand-500 transition-colors group"
               >
                 <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-brand-100 dark:bg-brand-900/30 blur-2xl opacity-60 group-hover:opacity-100 transition-opacity" />
-                <Icon className="relative h-5 w-5 text-brand-600 dark:text-brand-400 mb-3" />
-                <div className="relative text-2xl font-bold text-slate-900 dark:text-slate-50">{value}</div>
-                <div className="relative text-sm text-slate-500 dark:text-slate-400 mt-0.5">{label}</div>
+                <Icon className="relative h-4 w-4 text-brand-600 dark:text-brand-400 mb-2.5" />
+                <div className="relative text-xl font-bold text-slate-900 dark:text-slate-50">{value}</div>
+                <div className="relative text-xs text-slate-500 dark:text-slate-400 mt-0.5">{label}</div>
               </motion.div>
             ))}
           </div>
@@ -68,7 +68,7 @@ export function UpworkStats() {
             href={site.social.upwork}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-semibold transition-colors group"
+            className="mt-7 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-sm font-semibold transition-colors group"
           >
             Verify on Upwork
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

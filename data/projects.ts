@@ -1,5 +1,7 @@
 export interface Project {
   id: string;
+  /** Cover shown on project cards (path under /public). */
+  image: string;
   name: string;
   tagline: string;
   description: string;
@@ -16,6 +18,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'mymoneyflowai',
+    image: '/images/projects/mymoneyflowai.png',
     name: 'MyMoneyFlowAI',
     tagline: 'AI money-flow & tax compliance for freelancers',
     description:
@@ -30,6 +33,7 @@ export const projects: Project[] = [
   },
   {
     id: 'feedafrica',
+    image: '/images/projects/feedafrica.png',
     name: 'FeedAfrica',
     tagline: 'Sustainable farming network + HR + farm ops',
     description:
@@ -37,26 +41,29 @@ export const projects: Project[] = [
     role: 'Founder & Lead Engineer',
     year: '2025',
     tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'AgTech'],
-    link: 'https://feedafrica.app',
+    link: 'https://feedafrica.africa',
     status: 'active',
     featured: true,
     category: 'web',
   },
   {
-    id: 'rmks-webapp',
-    name: 'RMKS WebApp',
-    tagline: 'Enterprise project management with offline-first sync',
+    id: 'thealtermeai',
+    image: '/images/projects/thealtermeai.png',
+    name: 'TheAlterMeAI',
+    tagline: 'Intelligent engagement system for creators, founders, and social media managers',
     description:
-      'Led development of an enterprise project management system for Laramate GmbH with extensive offline capabilities. Built with Laravel and TypeScript to support field teams in low-connectivity environments.',
-    role: 'Full-stack Developer · Laramate GmbH',
-    year: '2025–2026',
-    tags: ['Laravel', 'TypeScript', 'React', 'Offline-first'],
-    status: 'case-study',
+      'Your own Knowledge Vault + AI generate fast, valuable posts and replies — and a DM-Assist that knows your business turns conversations into leads. All under your control. No spam, no growth hacks.',
+    role: 'Full-stack Developer & Founder· TheAlterMeAI',
+    year: '2026',
+    tags: ['NextJS', 'TypeScript', 'React'],
+    status: 'active',
     featured: true,
-    category: 'erp',
+    link: 'https://thealtermeai.com',
+    category: 'ai',
   },
   {
     id: 'piahealth',
+    image: '/images/projects/piahealth.png',
     name: 'PiaHealth',
     tagline: 'AI-powered insurance claims processing',
     description:
@@ -64,12 +71,14 @@ export const projects: Project[] = [
     role: 'Full-stack Developer · Laramate GmbH',
     year: '2025',
     tags: ['AI', 'Laravel', 'InsurTech', 'Document AI'],
-    status: 'case-study',
+    status: 'active',
     featured: true,
+    link: 'https://pia-health.de',
     category: 'ai',
   },
   {
     id: 'matrix-agromonitor',
+    image: '/images/projects/matrix-agromonitor.svg',
     name: 'Matrix AgroMonitor',
     tagline: 'Multi-farm cost, yield & revenue tracking',
     description:
@@ -82,6 +91,7 @@ export const projects: Project[] = [
   },
   {
     id: 'learnstar',
+    image: '/images/projects/learnstar.png',
     name: 'Learnstar',
     tagline: 'Subscription-based celebrity course platform',
     description:
@@ -89,23 +99,29 @@ export const projects: Project[] = [
     role: 'Full-stack Developer',
     year: '2024',
     tags: ['Laravel', 'Blade', 'Video Streaming', 'Payments'],
-    status: 'case-study',
+    status: 'active',
+    featured: true,
+    link: 'https://www.learnstar.co',
     category: 'web',
   },
   {
     id: 'ranie-erp',
-    name: 'Ranie Concepts ERP & POS',
+    image: '/images/projects/ranie-erp.png',
+    name: 'Ranie ERP & POS',
     tagline: 'Warehouse + retail ERP that lifted revenue 30%',
     description:
       'Built ERP and POS systems for multi-location warehouse and retail operations. Inventory, invoicing, and sales analytics modules that improved operational efficiency and contributed to ~30% revenue growth.',
     role: 'Full-stack Developer',
     year: '2024',
     tags: ['Laravel', 'POS', 'Inventory', 'Analytics'],
-    status: 'case-study',
+    status: 'active',
+    link: 'https://erp.ranie.com.ng',
+    featured: true,
     category: 'erp',
   },
   {
     id: 'violets-hotel',
+    image: '/images/projects/violets-hotel.svg',
     name: 'TheViolets Hotel System',
     tagline: 'Integrated hotel + restaurant management',
     description:
@@ -113,23 +129,28 @@ export const projects: Project[] = [
     role: 'Full-stack Developer',
     year: '2024',
     tags: ['CodeIgniter', 'Hospitality', 'POS', 'Microsoft Dynamics'],
-    status: 'case-study',
+    status: 'active',
+    link: 'https://theviolets.com',
     category: 'erp',
   },
   {
     id: 'dotman-communication',
-    name: 'Dotman Communication',
+    image: '/images/projects/dotman-communication.png',
+    name: 'Dotman Wallet',
     tagline: 'Flexible airtime, data & bills payment platform',
     description:
       'Backend systems and React Native features for a bills-payment platform. Built a multi-provider API switching layer so the admin can fail over between airtime/data providers when prices change or one goes down.',
     role: 'Web & Mobile Engineer',
     year: '2024',
     tags: ['Laravel', 'React Native', 'Paystack', 'Monnify'],
-    status: 'case-study',
+    status: 'active',
+    featured: true,
+    link: 'https://dotmanwallet.com',
     category: 'fintech',
   },
   {
     id: 'makarioworks',
+    image: '/images/projects/makarioworks.svg',
     name: 'MakarioWorks CMS',
     tagline: 'Custom CMS with Stripe + Paystack + Cloudinary',
     description:
@@ -142,6 +163,7 @@ export const projects: Project[] = [
   },
   {
     id: 'glt-business',
+    image: '/images/projects/glt-business.svg',
     name: 'GLT Business',
     tagline: 'Church business unit + guest house booking',
     description:
@@ -154,6 +176,7 @@ export const projects: Project[] = [
   },
   {
     id: 'bizgrowthhackerz',
+    image: '/images/projects/bizgrowthhackerz.svg',
     name: 'BizGrowthHackerz',
     tagline: 'Nigerian freelancer-client marketplace with escrow',
     description:

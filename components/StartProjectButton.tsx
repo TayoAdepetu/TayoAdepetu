@@ -20,7 +20,7 @@ export function StartProjectButton({
   const { open } = useContact();
 
   const base =
-    'group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold transition-all hover:-translate-y-0.5';
+    'group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-all hover:-translate-y-0.5';
   const styles =
     variant === 'primary'
       ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-xl shadow-brand-600/30 hover:shadow-brand-600/50'
