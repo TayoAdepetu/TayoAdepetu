@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ExternalLink, Code2 } from 'lucide-react';
 import type { Project } from '@/data/projects';
 import { cn } from '@/lib/utils';
+import { MobileProjectCard } from '@/components/projects/MobileProjectCard';
 
 type Filter = 'all' | Project['category'];
 
@@ -59,9 +60,12 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
         })}
       </div>
 
-      <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <motion.div layout className="grid md:grid-cols-2 gap-5">
         <AnimatePresence mode="popLayout">
-          {filtered.map((project, i) => (
+          {filtered.map((project, i) =>
+            project.showcase ? (
+              <MobileProjectCard key={project.id} project={project} index={i} />
+            ) : (
             <motion.article
               layout
               key={project.id}
@@ -137,7 +141,8 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
                 </div>
               </div>
             </motion.article>
-          ))}
+            ),
+          )}
         </AnimatePresence>
       </motion.div>
     </>

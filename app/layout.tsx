@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Instrument_Serif } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/ThemeProvider';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { ContactProvider } from '@/components/contact/ContactProvider';
@@ -72,15 +71,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body className={`${inter.variable} ${instrumentSerif.variable} antialiased bg-background text-foreground`}>
-        <ThemeProvider>
-          <ContactProvider>
-            <Navigation />
-            {children}
-            <Footer />
-          </ContactProvider>
-        </ThemeProvider>
+        <ContactProvider>
+          <Navigation />
+          {children}
+          <Footer />
+        </ContactProvider>
       </body>
     </html>
   );

@@ -1,13 +1,11 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { Mail, Sparkles, Clock, Globe2 } from 'lucide-react';
-import { useContact } from './contact/ContactProvider';
+import { Mail, Clock, Globe2 } from 'lucide-react';
+import { ContactCta } from './contact/ContactCta';
 import { site } from '@/data/site';
 
 export function Contact() {
-  const { open } = useContact();
-
   return (
     <section id="contact" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="max-w-6xl mx-auto">
@@ -37,28 +35,13 @@ export function Contact() {
                 feedback and next steps.
               </p>
 
-              <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <button
-                  onClick={() => open()}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white text-brand-700 text-sm font-bold hover:bg-brand-50 transition-all hover:-translate-y-0.5 shadow-xl"
-                >
-                  <Sparkles className="h-4 w-4" />
-                  Start a Project
-                </button>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-white/30 hover:bg-white/10 text-sm font-semibold transition-colors"
-                >
-                  <Mail className="h-4 w-4" />
-                  {site.email}
-                </a>
-              </div>
+              <ContactCta layout="section" className="mt-7" />
             </div>
 
             <div className="space-y-3">
               <InfoCard Icon={Clock} label="Typical delivery" value="5–7 weeks" />
               <InfoCard Icon={Globe2} label="Working with clients in" value="Nigeria, US, UK, Australia & beyond" />
-              <InfoCard Icon={Mail} label="Email" value={site.email} />
+              <InfoCard Icon={Mail} label="Email" value={site.email} href={`mailto:${site.email}`} />
             </div>
           </div>
         </motion.div>
@@ -71,12 +54,14 @@ function InfoCard({
   Icon,
   label,
   value,
+  href,
 }: {
   Icon: React.ElementType;
   label: string;
   value: string;
+  href?: string;
 }) {
-  return (
+  const content = (
     <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
       <div className="flex-shrink-0 h-9 w-9 rounded-lg bg-white/20 flex items-center justify-center">
         <Icon className="h-4 w-4" />
@@ -87,4 +72,14 @@ function InfoCard({
       </div>
     </div>
   );
+
+  if (href) {
+    return (
+      <a href={href} className="block hover:opacity-90 transition-opacity">
+        {content}
+      </a>
+    );
+  }
+
+  return content;
 }

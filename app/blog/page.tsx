@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getAllArticles } from '@/lib/mdx';
 import { ArticleCard } from '@/components/ArticleCard';
+import { PageHeader } from '@/components/PageHeader';
 import { BookOpen } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -15,18 +16,15 @@ export default function BlogPage() {
   return (
     <main className="relative pt-28 pb-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="max-w-3xl mb-10">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
-            Blog
-          </span>
-          <h1 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-50 leading-tight">
-            Notes <span className="text-gradient-brand">from the field</span>
-          </h1>
-          <p className="mt-4 text-base text-slate-600 dark:text-slate-300">
-            Freelancing, SEO, software engineering, and the small lessons I pick up while shipping software. No
-            fluff. No listicles.
-          </p>
-        </div>
+        <PageHeader
+          label="Writing"
+          title={
+            <>
+              My <span className="text-brand-600 dark:text-brand-400">Articles</span>
+            </>
+          }
+          description="Freelancing, SEO, software engineering, and the small lessons I pick up while shipping software. No fluff. No listicles."
+        />
 
         {articles.length === 0 ? (
           <div className="p-10 rounded-2xl bg-white dark:bg-slate-950 border border-dashed border-slate-300 dark:border-slate-700 text-center">
@@ -34,7 +32,9 @@ export default function BlogPage() {
               <BookOpen className="h-6 w-6" />
             </div>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              No posts yet. Add MDX files to <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800">content/articles/</code> and they&apos;ll show up here.
+              No posts yet. Add MDX files to{' '}
+              <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800">content/articles/</code> and
+              they&apos;ll show up here.
             </p>
           </div>
         ) : (

@@ -16,7 +16,7 @@ export function UpworkStats() {
   return (
     <section
       id="about"
-      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/40 border-y border-slate-200 dark:border-slate-800"
+      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800/80"
     >
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <motion.div
@@ -24,14 +24,15 @@ export function UpworkStats() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
+          className="text-center lg:text-left"
         >
           <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
             Verified track record
           </span>
           <h2 className="font-display mt-4 text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 dark:text-slate-50 leading-tight">
-            Six years on Upwork. <span className="text-accent-emerald">Zero bad reviews.</span>
+            Six Years on Upwork. <span className="text-brand-600 dark:text-brand-400">Zero Bad Reviews.</span>
           </h2>
-          <p className="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
+          <p className="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed">
             My Upwork profile has been earning top-rated badges since 2020 — first as a copywriter and SEO
             specialist, and for the last four years as a full-stack engineer. Every stat below is verified
             and public on my{' '}
@@ -46,7 +47,7 @@ export function UpworkStats() {
             .
           </p>
 
-          <div className="mt-8 grid grid-cols-2 gap-4 max-w-xl">
+          <div className="mt-8 grid grid-cols-2 gap-4 max-w-xl mx-auto lg:mx-0">
             {stats.map(({ label, value, Icon }, i) => (
               <motion.div
                 key={label}
@@ -54,10 +55,10 @@ export function UpworkStats() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
-                className="relative overflow-hidden p-5 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-brand-500 transition-colors group"
+                className="relative overflow-hidden p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 hover:border-brand-500 dark:hover:border-brand-500 transition-colors group text-center lg:text-left"
               >
                 <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-brand-100 dark:bg-brand-900/30 blur-2xl opacity-60 group-hover:opacity-100 transition-opacity" />
-                <Icon className="relative h-4 w-4 text-brand-600 dark:text-brand-400 mb-2.5" />
+                <Icon className="relative h-4 w-4 text-brand-600 dark:text-brand-400 mb-2.5 mx-auto lg:mx-0" />
                 <div className="relative text-xl font-bold text-slate-900 dark:text-slate-50">{value}</div>
                 <div className="relative text-xs text-slate-500 dark:text-slate-400 mt-0.5">{label}</div>
               </motion.div>
@@ -68,7 +69,7 @@ export function UpworkStats() {
             href={site.social.upwork}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-7 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-sm font-semibold transition-colors group"
+            className="mt-7 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-sm font-semibold transition-colors group mx-auto lg:mx-0"
           >
             Verify on Upwork
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -81,7 +82,7 @@ export function UpworkStats() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7 }}
-          className="relative"
+          className="relative mx-auto max-w-lg lg:max-w-none lg:mx-0"
         >
           <div className="absolute -inset-6 bg-gradient-to-br from-brand-500/20 via-brand-600/20 to-brand-800/20 rounded-[2rem] blur-2xl" />
           <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-2xl">

@@ -2,8 +2,9 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
-import { X, Mail, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { X, Mail, Send, CheckCircle2, AlertCircle, Loader2, MessageCircle } from 'lucide-react';
 import { site } from '@/data/site';
+import { buildProjectWhatsAppMessage, buildWhatsAppUrl } from '@/lib/contact';
 
 const PROJECT_TYPES = [
   'Mobile App Development',
@@ -97,6 +98,11 @@ export function ContactModal({ isOpen, onClose, preselectedService }: ContactMod
     return `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }, [fullName, email, projectType, description]);
 
+  const whatsappHref = useMemo(
+    () => buildWhatsAppUrl(buildProjectWhatsAppMessage(projectType)),
+    [projectType],
+  );
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (status === 'sending') return;
@@ -188,6 +194,30 @@ export function ContactModal({ isOpen, onClose, preselectedService }: ContactMod
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="px-5 py-5 space-y-4">
+                <div className="rounded-xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50 dark:bg-emerald-950/30 p-4">
+                  <p className="text-[13px] font-medium text-emerald-900 dark:text-emerald-100">
+                    Prefer a quick chat?
+                  </p>
+                  <p className="mt-1 text-[12.5px] text-emerald-800/80 dark:text-emerald-200/80">
+                    Message me on WhatsApp — I usually reply within a few hours.
+                  </p>
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Open WhatsApp
+                  </a>
+                </div>
+
+                <div className="flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.12em] text-slate-400 dark:text-slate-500">
+                  <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+                  or send a detailed brief
+                  <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+                </div>
+
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Field label="Full name" htmlFor="contact-name">
                     <input

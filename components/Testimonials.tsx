@@ -16,7 +16,7 @@ export function Testimonials() {
             Real words · Upwork verified
           </span>
           <h2 className="font-display mt-4 text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 dark:text-slate-50 leading-tight">
-            Clients whose projects <span className="text-accent-emerald">actually shipped</span>
+            Clients Whose <span className="text-brand-600 dark:text-brand-400">Projects Actually Shipped</span>
           </h2>
           <p className="mt-4 text-base text-slate-600 dark:text-slate-300">
             Screenshots pulled straight from my Upwork profile, spanning software engineering, SEO, content

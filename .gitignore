@@ -51,6 +51,10 @@ next-env.d.ts
 # OS
 .DS_Store
 Thumbs.db
+
+# source mobile app assets (raw screen recordings can exceed GitHub limits)
+data/MobileApp/**/*.MP4
+data/MobileApp/**/*.mp4
 # LaunchWithCursor extension cache
 .launchwithcursor/cache/
 # LaunchWithCursor extension cache

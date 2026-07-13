@@ -3,18 +3,19 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ChevronDown, Menu, X, Sparkles, Smartphone, Globe, Puzzle, MessageCircle, Search, ShieldCheck } from 'lucide-react';
+import { ChevronDown, Menu, X, Sparkles, Smartphone, Globe, Puzzle, MessageCircle, Search, ShieldCheck, FileText } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { services, type Service } from '@/data/services';
+import { buildProjectWhatsAppMessage, buildWhatsAppUrl } from '@/lib/contact';
 import { useContact } from './contact/ContactProvider';
-import { ThemeToggle } from './ThemeToggle';
+import { ContactCta } from './contact/ContactCta';
 import { cn } from '@/lib/utils';
 
 const NAV_LINKS = [
   { href: '/#about', label: 'About' },
   { href: '/#projects', label: 'Projects' },
   { href: '/#testimonials', label: 'Testimonials' },
-  { href: '/blog', label: 'Writing' },
+  { href: '/blog', label: 'Blog' },
 ];
 
 const iconFor = (icon: Service['icon']) => {
@@ -61,6 +62,7 @@ export function Navigation() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const pathname = usePathname();
   const { open: openContact } = useContact();
+  const whatsappHref = buildWhatsAppUrl(buildProjectWhatsAppMessage());
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -94,7 +96,7 @@ export function Navigation() {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           scrolled
-            ? 'bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl border-b border-slate-200/70 dark:border-slate-800/70 shadow-sm'
+            ? 'bg-white/85 backdrop-blur-xl border-b border-slate-200/70 shadow-sm'
             : 'bg-transparent',
         )}
       >
@@ -199,13 +201,7 @@ export function Navigation() {
 
             {/* Right cluster */}
             <div className="flex items-center gap-2">
-              <ThemeToggle />
-              <button
-                onClick={() => openContact()}
-                className="hidden md:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-[13px] font-semibold transition-all hover:-translate-y-0.5"
-              >
-                Contact us
-              </button>
+              <ContactCta layout="nav" />
               <button
                 onClick={() => setMobileOpen((v) => !v)}
                 className="lg:hidden rounded-lg p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -300,15 +296,26 @@ export function Navigation() {
                   </Link>
                 ))}
 
-                <div className="pt-3">
+                <div className="pt-3 space-y-2">
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileOpen(false)}
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-white text-emerald-700 hover:bg-emerald-50 text-sm font-bold shadow-md border border-slate-200/80 transition-colors"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Chat on WhatsApp
+                  </a>
                   <button
                     onClick={() => {
                       setMobileOpen(false);
                       openContact();
                     }}
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition-colors"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 hover:border-brand-500 text-slate-800 text-sm font-semibold transition-colors"
                   >
-                    Contact us
+                    <FileText className="h-4 w-4" />
+                    Send a Project Brief
                   </button>
                 </div>
               </div>

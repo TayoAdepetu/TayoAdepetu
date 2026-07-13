@@ -24,7 +24,7 @@ export function ServicesSection() {
             What I do
           </span>
           <h2 className="font-display mt-4 text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 dark:text-slate-50 leading-tight">
-            Seven ways I can move <span className="text-brand-600 dark:text-brand-400">your product forward</span>
+            Seven Ways I Can <span className="text-brand-600 dark:text-brand-400">Move Your Product Forward</span>
           </h2>
           <p className="mt-4 text-base text-slate-600 dark:text-slate-300">
             From MVP to launch to first-page rankings, each service has a dedicated process, typical timeline,
@@ -43,7 +43,7 @@ export function ServicesSection() {
             >
               <Link
                 href={`/services/${svc.slug}`}
-                className="group relative flex flex-col h-full p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-brand-500 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/10"
+                className="group relative flex flex-col h-full p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 hover:border-brand-500 dark:hover:border-brand-500 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/10"
               >
                 <div className="absolute inset-x-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r from-brand-400 via-brand-600 to-brand-500 opacity-0 group-hover:opacity-100 transition-opacity" />
 

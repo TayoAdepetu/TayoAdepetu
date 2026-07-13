@@ -301,7 +301,7 @@ export const services: Service[] = [
     shortName: 'Escrow Apps',
     tagline: 'Trust-first marketplaces where buyers and sellers get paid safely.',
     summary:
-      'I build marketplace and service-booking apps with built-in escrow — funds held safely, released on milestone, with dispute resolution baked in. Proven in production with BizGrowthHackerz and Monnify.',
+      'I build marketplace and service-booking apps with built-in escrow — funds held safely, released on milestone, with dispute resolution baked in. Proven in production with Monnify and real-money marketplace deployments.',
     icon: 'shield',
     highlights: [
       'Milestone-based escrow',

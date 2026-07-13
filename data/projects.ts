@@ -1,3 +1,13 @@
+import { mobileShowcases } from './mobile-showcases';
+
+export interface ProjectShowcaseMedia {
+  cover: string;
+  cardImages: [string, string];
+  screenshots: { src: string; alt: string }[];
+  videos: { src: string; poster?: string; label: string }[];
+  highlights?: string[];
+}
+
 export interface Project {
   id: string;
   /** Cover shown on project cards (path under /public). */
@@ -13,9 +23,40 @@ export interface Project {
   status: 'active' | 'archived' | 'case-study';
   featured?: boolean;
   category: 'web' | 'mobile' | 'fintech' | 'ai' | 'marketplace' | 'erp';
+  showcase?: ProjectShowcaseMedia;
 }
 
 export const projects: Project[] = [
+  {
+    id: 'stylevault',
+    image: mobileShowcases.stylevault.cover,
+    name: 'StyleVault',
+    tagline: 'AI-powered smart wardrobe organizer & personal stylist',
+    description:
+      'Production MVP helping users digitize their wardrobe, auto-tag clothing with AI vision, and get occasion and weather-aware outfit recommendations — plus analytics on what they actually wear.',
+    role: 'Full-stack Engineer · End-to-end delivery',
+    year: '2026',
+    tags: ['React Native', 'Expo', 'NestJS', 'PostgreSQL', 'AI Vision'],
+    status: 'active',
+    featured: true,
+    category: 'mobile',
+    showcase: mobileShowcases.stylevault,
+  },
+  {
+    id: 'enuraxhealth',
+    image: mobileShowcases.enuraxhealth.cover,
+    name: 'EnuraxHealth',
+    tagline: 'Healthcare consultation marketplace for Nigerians at home & abroad',
+    description:
+      'Telemedicine platform where healthcare professionals build rich profiles, get discovered, accept bookings, and run audio/video consultations — with AI-assisted routing to help patients find the right specialist.',
+    role: 'Full-stack Engineer · End-to-end delivery',
+    year: '2026',
+    tags: ['React Native', 'Expo', 'NestJS', 'Prisma', 'Telemedicine'],
+    status: 'active',
+    featured: true,
+    category: 'mobile',
+    showcase: mobileShowcases.enuraxhealth,
+  },
   {
     id: 'mymoneyflowai',
     image: '/images/projects/mymoneyflowai.png',
@@ -77,19 +118,6 @@ export const projects: Project[] = [
     category: 'ai',
   },
   {
-    id: 'matrix-agromonitor',
-    image: '/images/projects/matrix-agromonitor.svg',
-    name: 'Matrix AgroMonitor',
-    tagline: 'Multi-farm cost, yield & revenue tracking',
-    description:
-      'Led full-cycle development of a farm management system that lets Matrix AgroMonitor run multiple farms (cooperatives & clusters) across Nigerian states — tracking input usage, yield, costs, and revenue in one place.',
-    role: 'Full-stack Developer',
-    year: '2024',
-    tags: ['React', 'Laravel', 'AgTech', 'Analytics'],
-    status: 'case-study',
-    category: 'web',
-  },
-  {
     id: 'learnstar',
     image: '/images/projects/learnstar.png',
     name: 'Learnstar',
@@ -121,7 +149,7 @@ export const projects: Project[] = [
   },
   {
     id: 'violets-hotel',
-    image: '/images/projects/violets-hotel.svg',
+    image: '/images/projects/theviolets_hotels.png',
     name: 'TheViolets Hotel System',
     tagline: 'Integrated hotel + restaurant management',
     description:
@@ -130,7 +158,7 @@ export const projects: Project[] = [
     year: '2024',
     tags: ['CodeIgniter', 'Hospitality', 'POS', 'Microsoft Dynamics'],
     status: 'active',
-    link: 'https://theviolets.com',
+    link: 'https://theviolets.ng/',
     category: 'erp',
   },
   {
@@ -147,45 +175,6 @@ export const projects: Project[] = [
     featured: true,
     link: 'https://dotmanwallet.com',
     category: 'fintech',
-  },
-  {
-    id: 'makarioworks',
-    image: '/images/projects/makarioworks.svg',
-    name: 'MakarioWorks CMS',
-    tagline: 'Custom CMS with Stripe + Paystack + Cloudinary',
-    description:
-      'Backend services and a custom CMS using Laravel and MySQL, with Stripe and Paystack payment rails and Cloudinary-powered media management.',
-    role: 'Backend Engineer',
-    year: '2024',
-    tags: ['Laravel', 'CMS', 'Stripe', 'Cloudinary'],
-    status: 'case-study',
-    category: 'web',
-  },
-  {
-    id: 'glt-business',
-    image: '/images/projects/glt-business.svg',
-    name: 'GLT Business',
-    tagline: 'Church business unit + guest house booking',
-    description:
-      'Volunteer-built backend systems for a church business unit, including the main website and a guest house booking platform with Paystack, Cloudinary, and Gmail SMTP.',
-    role: 'Backend Engineer (Volunteer)',
-    year: '2023–2024',
-    tags: ['Laravel', 'Bookings', 'Paystack'],
-    status: 'case-study',
-    category: 'web',
-  },
-  {
-    id: 'bizgrowthhackerz',
-    image: '/images/projects/bizgrowthhackerz.svg',
-    name: 'BizGrowthHackerz',
-    tagline: 'Nigerian freelancer-client marketplace with escrow',
-    description:
-      'Nigerian freelancer-client marketplace with Monnify-powered escrow, JWT auth, role-based access, and Firebase real-time chat. A deep learning experience in building trust-first marketplaces.',
-    role: 'Full-stack Web Developer',
-    year: '2022–2023',
-    tags: ['Vue.js', 'Nuxt.js', 'Laravel', 'Monnify', 'Firebase'],
-    status: 'archived',
-    category: 'marketplace',
   },
 ];
 

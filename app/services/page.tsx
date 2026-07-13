@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
 import { services } from '@/data/services';
 import { ServiceIcon } from '@/components/ServiceIcon';
+import { PageHeader } from '@/components/PageHeader';
 
 export const metadata: Metadata = {
   title: 'Services',
@@ -14,25 +15,24 @@ export default function ServicesPage() {
   return (
     <main className="relative pt-28 pb-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
-            Services
-          </span>
-          <h1 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-50 leading-tight">
-            Everything I ship — <span className="text-gradient-brand">end to end</span>
-          </h1>
-          <p className="mt-4 text-base text-slate-600 dark:text-slate-300">
-            Seven focused services, each with a proven process, clear timelines, and real projects to back them
-            up. Pick one to dive deep, or bundle a few for a full launch.
-          </p>
-        </div>
+        <PageHeader
+          label="Services"
+          align="center"
+          title={
+            <>
+              Everything I ship —{' '}
+              <span className="text-brand-600 dark:text-brand-400">end to end</span>
+            </>
+          }
+          description="Seven focused services, each with a proven process, clear timelines, and real projects to back them up. Pick one to dive deep, or bundle a few for a full launch."
+        />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((svc) => (
             <Link
               key={svc.slug}
               href={`/services/${svc.slug}`}
-              className="group relative flex flex-col h-full p-7 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-brand-500 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/10"
+              className="group relative flex flex-col h-full p-7 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 hover:border-brand-500 dark:hover:border-brand-500 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/10"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 group-hover:bg-brand-600 group-hover:text-white transition-colors mb-4">
                 <ServiceIcon icon={svc.icon} className="h-5 w-5" />

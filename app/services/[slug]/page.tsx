@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Code2, Users } from 'lucide-react';
 import { services } from '@/data/services';
 import { ServiceIcon } from '@/components/ServiceIcon';
-import { StartProjectButton } from '@/components/StartProjectButton';
+import { ContactCta } from '@/components/contact/ContactCta';
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -65,11 +65,7 @@ export default async function ServiceDetailPage({
             <p className="mt-4 text-base text-brand-50/80 max-w-3xl leading-relaxed">{svc.summary}</p>
 
             <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              <StartProjectButton
-                preselectedService={svc.name}
-                label="Start this project"
-                className="!bg-white !text-brand-700 hover:!bg-brand-50 !shadow-xl"
-              />
+              <ContactCta preselectedService={svc.name} layout="on-dark" />
               <Link
                 href="/projects"
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-white/30 hover:bg-white/10 text-sm font-semibold transition-colors"
@@ -176,11 +172,10 @@ export default async function ServiceDetailPage({
             Ready to kick things off?
           </h2>
           <p className="mt-2.5 text-sm text-slate-600 dark:text-slate-300 max-w-xl mx-auto">
-            Click the button — the form comes pre-selected with this service, so you only need to tell me
-            about the project.
+            WhatsApp is fastest — or send a detailed brief if you prefer email.
           </p>
           <div className="mt-5 flex justify-center">
-            <StartProjectButton preselectedService={svc.name} label={`Kick off ${svc.shortName.toLowerCase()}`} />
+            <ContactCta preselectedService={svc.name} layout="inline" />
           </div>
         </section>
 

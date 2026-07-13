@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'motion/react';
 import { ExternalLink, ArrowRight, Code2 } from 'lucide-react';
 import { projects } from '@/data/projects';
+import { MobileProjectCard } from '@/components/projects/MobileProjectCard';
 
 const categoryLabels: Record<string, string> = {
   web: 'Web App',
@@ -16,8 +17,13 @@ const categoryLabels: Record<string, string> = {
 };
 
 export function Projects() {
-  // Show a curated selection on the homepage — full list on /projects
-  const featured = projects.filter((p) => p.featured || ['learnstar', 'ranie-erp', 'dotman-communication'].includes(p.id));
+  const mobileProjects = projects.filter((p) => p.showcase);
+  const featuredWeb = projects.filter(
+    (p) =>
+      !p.showcase &&
+      p.id !== 'piahealth' &&
+      (p.featured || ['learnstar', 'ranie-erp', 'dotman-communication'].includes(p.id)),
+  );
 
   return (
     <section id="projects" className="relative py-24 px-4 sm:px-6 lg:px-8">
@@ -34,11 +40,11 @@ export function Projects() {
               Selected work
             </span>
             <h2 className="font-display mt-4 text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 dark:text-slate-50 leading-tight">
-              Products I&apos;ve <span className="text-brand-600 dark:text-brand-400">shipped</span>
+              Products I&apos;ve <span className="text-brand-600 dark:text-brand-400">Shipped</span>
             </h2>
             <p className="mt-3 text-base text-slate-600 dark:text-slate-300 max-w-2xl">
-              From enterprise project management to AI insurance claims to multi-farm agribusiness ops, here&apos;s
-              a slice of the 35+ projects I&apos;ve delivered.
+              From AI-powered mobile apps to enterprise systems and fintech payment rails — a slice of the 35+
+              projects I&apos;ve delivered.
             </p>
           </div>
           <Link
@@ -50,8 +56,24 @@ export function Projects() {
           </Link>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          {featured.map((project, i) => (
+        {mobileProjects.length > 0 && (
+          <div className="mb-14">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+              Mobile apps
+            </span>
+            <div className="grid md:grid-cols-2 gap-5 mt-5">
+              {mobileProjects.map((project, i) => (
+                <MobileProjectCard key={project.id} project={project} index={i} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+          Web & platform
+        </span>
+        <div className="grid md:grid-cols-2 gap-5 mt-5">
+          {featuredWeb.map((project, i) => (
             <motion.article
               key={project.id}
               initial={{ opacity: 0, y: 24 }}
