@@ -1,6 +1,5 @@
 import { Hero } from '@/components/Hero';
 import { UpworkStats } from '@/components/UpworkStats';
-import { About } from '@/components/About';
 import { ServicesSection } from '@/components/ServicesSection';
 import { Projects } from '@/components/Projects';
 import { Testimonials } from '@/components/Testimonials';
@@ -12,7 +11,6 @@ export default function Home() {
     <main className="relative">
       <Hero />
       <UpworkStats />
-      <About />
       <ServicesSection />
       <Projects />
       <Testimonials />

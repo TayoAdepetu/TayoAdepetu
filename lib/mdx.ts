@@ -4,6 +4,11 @@ import matter from 'gray-matter';
 
 const articlesDirectory = path.join(process.cwd(), 'content/articles');
 
+export interface ArticleImage {
+  src: string;
+  alt: string;
+}
+
 export interface ArticleFrontmatter {
   title: string;
   date: string;
@@ -11,6 +16,9 @@ export interface ArticleFrontmatter {
   readTime: string;
   tags: string[];
   slug: string;
+  coverImage?: string;
+  coverImageAlt?: string;
+  images?: ArticleImage[];
 }
 
 export interface ArticleData {
@@ -18,12 +26,26 @@ export interface ArticleData {
   content: string;
 }
 
+function articlePathForSlug(slug: string): string | null {
+  const mdxPath = path.join(articlesDirectory, `${slug}.mdx`);
+  if (fs.existsSync(mdxPath)) return mdxPath;
+
+  const mdPath = path.join(articlesDirectory, `${slug}.md`);
+  if (fs.existsSync(mdPath)) return mdPath;
+
+  return null;
+}
+
 export function getArticleSlugs(): string[] {
   try {
     if (!fs.existsSync(articlesDirectory)) {
       return [];
     }
-    return fs.readdirSync(articlesDirectory).filter((file) => file.endsWith('.mdx'));
+
+    return fs
+      .readdirSync(articlesDirectory)
+      .filter((file) => file.endsWith('.mdx') || file.endsWith('.md'))
+      .map((file) => file.replace(/\.(mdx|md)$/, ''));
   } catch {
     return [];
   }
@@ -33,8 +55,13 @@ export function getArticleSlugs(): string[] {
  * Throws if the article cannot be found. Prefer getArticleBySlugSafe in pages.
  */
 export function getArticleBySlug(slug: string): ArticleData {
-  const realSlug = slug.replace(/\.mdx$/, '');
-  const fullPath = path.join(articlesDirectory, `${realSlug}.mdx`);
+  const realSlug = slug.replace(/\.(mdx|md)$/, '');
+  const fullPath = articlePathForSlug(realSlug);
+
+  if (!fullPath) {
+    throw new Error(`Article not found: ${realSlug}`);
+  }
+
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 

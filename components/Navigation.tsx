@@ -11,11 +11,10 @@ import { ThemeToggle } from './ThemeToggle';
 import { cn } from '@/lib/utils';
 
 const NAV_LINKS = [
-  { href: '/', label: 'Home' },
   { href: '/#about', label: 'About' },
   { href: '/#projects', label: 'Projects' },
   { href: '/#testimonials', label: 'Testimonials' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/blog', label: 'Writing' },
 ];
 
 const iconFor = (icon: Service['icon']) => {
@@ -37,6 +36,23 @@ const iconFor = (icon: Service['icon']) => {
       return <ShieldCheck className={base} />;
   }
 };
+
+function AvailabilityBadge({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold border border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300',
+        className,
+      )}
+    >
+      <span className="relative flex h-1.5 w-1.5">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+      </span>
+      Available
+    </span>
+  );
+}
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -84,22 +100,25 @@ export function Navigation() {
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 group">
-              <span className="relative inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-white text-sm font-bold shadow-lg shadow-brand-500/25 group-hover:shadow-brand-500/40 transition-shadow">
-                TA
-              </span>
-              <div className="hidden sm:block leading-tight">
-                <div className="text-sm font-semibold text-slate-900 dark:text-slate-50">Tayo Adepetu</div>
-                <div className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Engineer × SEO
+            {/* Logo + availability */}
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <Link href="/" className="flex items-center gap-2 group min-w-0">
+                <span className="relative inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-brand-600 text-white text-sm font-bold">
+                  TA
+                </span>
+                <div className="hidden sm:block leading-tight">
+                  <div className="text-sm font-semibold text-slate-900 dark:text-slate-50">Tayo Adepetu</div>
+                  <div className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Engineer × SEO
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+              <AvailabilityBadge />
+            </div>
 
             {/* Desktop links */}
             <div className="hidden lg:flex items-center gap-1">
-              {NAV_LINKS.slice(0, 3).map((l) => (
+              {NAV_LINKS.slice(0, 2).map((l) => (
                 <NavLink key={l.href} href={l.href}>
                   {l.label}
                 </NavLink>
@@ -171,7 +190,7 @@ export function Navigation() {
                 </AnimatePresence>
               </div>
 
-              {NAV_LINKS.slice(3).map((l) => (
+              {NAV_LINKS.slice(2).map((l) => (
                 <NavLink key={l.href} href={l.href}>
                   {l.label}
                 </NavLink>
@@ -183,7 +202,7 @@ export function Navigation() {
               <ThemeToggle />
               <button
                 onClick={() => openContact()}
-                className="hidden md:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-[13px] font-semibold shadow-lg shadow-brand-600/25 transition-all hover:shadow-brand-600/40 hover:-translate-y-0.5"
+                className="hidden md:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-[13px] font-semibold transition-all hover:-translate-y-0.5"
               >
                 Contact us
               </button>
@@ -221,7 +240,7 @@ export function Navigation() {
               className="absolute right-0 top-0 h-full w-[85%] max-w-sm bg-white dark:bg-slate-950 shadow-2xl overflow-y-auto"
             >
               <div className="p-5 pt-20 space-y-1">
-                {NAV_LINKS.slice(0, 3).map((l) => (
+                {NAV_LINKS.slice(0, 2).map((l) => (
                   <Link
                     key={l.href}
                     href={l.href}
@@ -271,7 +290,7 @@ export function Navigation() {
                   )}
                 </AnimatePresence>
 
-                {NAV_LINKS.slice(3).map((l) => (
+                {NAV_LINKS.slice(2).map((l) => (
                   <Link
                     key={l.href}
                     href={l.href}
@@ -287,7 +306,7 @@ export function Navigation() {
                       setMobileOpen(false);
                       openContact();
                     }}
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold shadow-lg shadow-brand-600/25 transition-colors"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition-colors"
                   >
                     Contact us
                   </button>

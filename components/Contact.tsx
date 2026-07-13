@@ -27,7 +27,7 @@ export function Contact() {
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-white/15 backdrop-blur-md border border-white/20">
                 Let&apos;s build something
               </span>
-              <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
+              <h2 className="font-display mt-4 text-2xl sm:text-3xl lg:text-4xl font-normal leading-tight">
                 Got an idea? <br />
                 I&apos;ll help you ship it.
               </h2>
@@ -43,7 +43,7 @@ export function Contact() {
                   className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white text-brand-700 text-sm font-bold hover:bg-brand-50 transition-all hover:-translate-y-0.5 shadow-xl"
                 >
                   <Sparkles className="h-4 w-4" />
-                  Start a project
+                  Start a Project
                 </button>
                 <a
                   href={`mailto:${site.email}`}

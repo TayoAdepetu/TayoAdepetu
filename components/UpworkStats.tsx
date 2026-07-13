@@ -15,7 +15,7 @@ const stats = [
 export function UpworkStats() {
   return (
     <section
-      id="upwork"
+      id="about"
       className="relative py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/40 border-y border-slate-200 dark:border-slate-800"
     >
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -25,11 +25,11 @@ export function UpworkStats() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
             Verified track record
           </span>
-          <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-50 leading-tight">
-            Six years on Upwork. <span className="text-gradient-brand">Zero bad reviews.</span>
+          <h2 className="font-display mt-4 text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 dark:text-slate-50 leading-tight">
+            Six years on Upwork. <span className="text-accent-emerald">Zero bad reviews.</span>
           </h2>
           <p className="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
             My Upwork profile has been earning top-rated badges since 2020 — first as a copywriter and SEO

@@ -52,6 +52,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.font-display {
+  font-family: var(--font-display), Georgia, 'Times New Roman', serif;
+}
+
+.text-accent-emerald {
+  color: #059669;
+}
+
+.dark .text-accent-emerald {
+  color: #34d399;
+}
+
 ::selection {
   background: var(--brand-600);
   color: #fff;

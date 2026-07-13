@@ -10,7 +10,7 @@ export function ServicesSection() {
   return (
     <section
       id="services"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/40 border-y border-slate-200 dark:border-slate-800"
+      className="relative py-24 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
         <motion.div
@@ -20,11 +20,11 @@ export function ServicesSection() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
             What I do
           </span>
-          <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-50 leading-tight">
-            Seven ways I can move <span className="text-gradient-brand">your product forward</span>
+          <h2 className="font-display mt-4 text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 dark:text-slate-50 leading-tight">
+            Seven ways I can move <span className="text-brand-600 dark:text-brand-400">your product forward</span>
           </h2>
           <p className="mt-4 text-base text-slate-600 dark:text-slate-300">
             From MVP to launch to first-page rankings, each service has a dedicated process, typical timeline,

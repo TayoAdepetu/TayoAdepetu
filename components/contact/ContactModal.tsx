@@ -152,7 +152,7 @@ export function ContactModal({ isOpen, onClose, preselectedService }: ContactMod
               <div>
                 <h3 className="text-base font-semibold text-slate-900 dark:text-slate-50 flex items-center gap-2">
                   <Mail className="h-4 w-4 text-brand-600" />
-                  Start a project
+                  Start a Project
                 </h3>
                 <p className="text-[12.5px] text-slate-500 dark:text-slate-400">
                   Tell me what you&apos;re building — I&apos;ll reply within 24 hours.

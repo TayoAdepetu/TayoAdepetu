@@ -12,11 +12,11 @@ export function Testimonials() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
             Real words · Upwork verified
           </span>
-          <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-50 leading-tight">
-            Clients whose projects <span className="text-gradient-brand">actually shipped</span>
+          <h2 className="font-display mt-4 text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 dark:text-slate-50 leading-tight">
+            Clients whose projects <span className="text-accent-emerald">actually shipped</span>
           </h2>
           <p className="mt-4 text-base text-slate-600 dark:text-slate-300">
             Screenshots pulled straight from my Upwork profile, spanning software engineering, SEO, content

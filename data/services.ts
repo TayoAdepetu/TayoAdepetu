@@ -125,7 +125,7 @@ export const services: Service[] = [
     ],
     tech: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Laravel', 'PostgreSQL', 'MySQL', 'Vercel'],
     idealFor: ['Founders launching an MVP', 'Businesses rebranding their web presence', 'SaaS teams needing a marketing site'],
-    timeline: '4–6 weeks for marketing sites, 6–10 weeks for web apps',
+    timeline: '5-7 weeks for marketing sites, 5-7 weeks for web apps',
   },
   {
     slug: 'chrome-extension-development',
@@ -167,7 +167,7 @@ export const services: Service[] = [
     ],
     tech: ['Manifest V3', 'React', 'TypeScript', 'Chrome APIs', 'OpenAI / Anthropic', 'OAuth 2.0'],
     idealFor: ['SaaS teams adding in-browser features', 'Creators shipping productivity tools', 'Growth teams needing lead scrapers'],
-    timeline: '3–5 weeks for a polished v1',
+    timeline: '5-7 weeks for a polished v1',
   },
   {
     slug: 'ai-powered-software-development',
@@ -209,7 +209,7 @@ export const services: Service[] = [
     ],
     tech: ['OpenAI', 'Anthropic', 'Next.js', 'Python', 'LangChain', 'Pinecone / pgvector', 'Laravel'],
     idealFor: ['Ops teams drowning in documents', 'Support teams wanting a smart assistant', 'Founders building an AI-first product'],
-    timeline: '6–8 weeks for a production-ready MVP',
+    timeline: '5-7 weeks for a production-ready MVP',
   },
   {
     slug: 'whatsapp-software-development',
@@ -251,7 +251,7 @@ export const services: Service[] = [
     ],
     tech: ['WhatsApp Cloud API', 'Node.js', 'Laravel', 'OpenAI', 'Paystack', 'Redis'],
     idealFor: ['E-commerce brands', 'Clinics and service businesses', 'Support teams scaling without headcount'],
-    timeline: '3–5 weeks for a launch-ready bot',
+    timeline: '5-7 weeks for a launch-ready bot',
   },
   {
     slug: 'local-and-global-seo',
@@ -293,7 +293,7 @@ export const services: Service[] = [
     ],
     tech: ['Ahrefs', 'Google Search Console', 'GA4', 'Screaming Frog', 'Surfer SEO', 'Next.js SEO stack'],
     idealFor: ['Local businesses in Nigeria', 'SaaS founders in the US / UK / AU', 'E-commerce brands scaling organic traffic'],
-    timeline: 'Ongoing — first wins in 4–8 weeks',
+    timeline: 'Ongoing — first wins in 5-7 weeks',
   },
   {
     slug: 'escrow-powered-apps',
@@ -335,7 +335,7 @@ export const services: Service[] = [
     ],
     tech: ['Laravel', 'React Native', 'Next.js', 'Monnify', 'Paystack', 'Stripe', 'Firebase', 'PostgreSQL'],
     idealFor: ['Marketplaces', 'Service-booking platforms', 'Freelance / gig-economy apps'],
-    timeline: '8–12 weeks for a production-ready v1',
+    timeline: '5-7 weeks for a production-ready v1',
   },
 ];
 

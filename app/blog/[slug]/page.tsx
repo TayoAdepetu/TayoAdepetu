@@ -1,8 +1,35 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import type { MDXComponents } from 'mdx/types';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { getArticleBySlugSafe, getArticleSlugs } from '@/lib/mdx';
+import { site } from '@/data/site';
+
+const mdxComponents: MDXComponents = {
+  img: ({ src, alt }) => {
+    if (!src || typeof src !== 'string') return null;
+
+    return (
+      <figure className="my-10 not-prose">
+        <div className="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+          <Image
+            src={src}
+            alt={alt ?? ''}
+            width={1200}
+            height={675}
+            className="w-full h-auto"
+            sizes="(min-width: 768px) 768px, 100vw"
+          />
+        </div>
+        {alt ? (
+          <figcaption className="mt-2.5 text-center text-xs text-slate-500 dark:text-slate-400">{alt}</figcaption>
+        ) : null}
+      </figure>
+    );
+  },
+};
 
 export async function generateStaticParams() {
   const slugs = getArticleSlugs();
@@ -25,6 +52,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: 'article',
       publishedTime: article.frontmatter.date,
       authors: ['Tayo Adepetu'],
+      images: article.frontmatter.coverImage
+        ? [{ url: new URL(article.frontmatter.coverImage, site.url).toString() }]
+        : undefined,
     },
   };
 }
@@ -57,7 +87,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </Link>
 
         <header className="mb-10">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3.5 text-slate-900 dark:text-slate-50 leading-tight">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-normal mb-3.5 text-slate-900 dark:text-slate-50 leading-tight">
             {frontmatter.title}
           </h1>
 
@@ -72,7 +102,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </span>
           </div>
 
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-1.5 mb-8">
             {frontmatter.tags.map((tag) => (
               <span
                 key={tag}
@@ -82,10 +112,24 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </span>
             ))}
           </div>
+
+          {frontmatter.coverImage ? (
+            <div className="relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+              <Image
+                src={frontmatter.coverImage}
+                alt={frontmatter.coverImageAlt ?? frontmatter.title}
+                width={1200}
+                height={675}
+                className="w-full h-auto"
+                priority
+                sizes="(min-width: 768px) 768px, 100vw"
+              />
+            </div>
+          ) : null}
         </header>
 
         <div className="prose prose-neutral dark:prose-invert max-w-none">
-          <MDXRemote source={content} />
+          <MDXRemote source={content} components={mdxComponents} />
         </div>
       </article>
     </main>

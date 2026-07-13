@@ -30,11 +30,11 @@ export function Projects() {
           className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12"
         >
           <div>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
               Selected work
             </span>
-            <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-50 leading-tight">
-              Products I&apos;ve <span className="text-gradient-brand">shipped</span>
+            <h2 className="font-display mt-4 text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 dark:text-slate-50 leading-tight">
+              Products I&apos;ve <span className="text-brand-600 dark:text-brand-400">shipped</span>
             </h2>
             <p className="mt-3 text-base text-slate-600 dark:text-slate-300 max-w-2xl">
               From enterprise project management to AI insurance claims to multi-farm agribusiness ops, here&apos;s

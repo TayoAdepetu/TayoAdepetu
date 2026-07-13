@@ -1,0 +1,173 @@
+---
+title: "AI Agents Aren’t Magic: They’re Computer Architecture Reapplied"
+date: "2026-03-10"
+excerpt: "What if AI agents aren’t revolutionary in structure, but evolutionary in abstraction? Revisiting CPU fundamentals helped me see LLM orchestration in a new light."
+readTime: "5 min read"
+tags: ['ai', 'computer science', 'agents']
+coverImage: "/images/articles/ai-agents-cover.png"
+coverImageAlt: "Stylized CPU chip orchestrating AI agent tools and memory nodes"
+---
+
+Because I just got admitted to study Computer Science at **Miva Open University**, I’ve had to study the basics of computer science again. In a lecture, we were taught something we’ve all heard before:
+
+“The CPU is the brain of the computer.”
+
+Of course, this isn’t new. We learned it in primary school. We repeated it in secondary school. It almost feels too basic to think about seriously.
+
+But because I’ve also been reading deeply about AI agents, that simple statement started to feel different.
+
+It just wouldn’t leave my mind.
+
+What if AI agents are not revolutionary in structure, but evolutionary in abstraction?
+
+What if we’re simply rebuilding the computer — at a higher cognitive layer?
+
+## The CPU Is Not “Smart.” It Coordinates.
+When we say the CPU is the brain, we don’t mean it is intelligent in the human sense.
+
+What it actually does is:
+
+* Fetches instructions  
+* Decodes them  
+* Decide what needs to run  
+* Schedules execution  
+* Coordinate between memory and storage  
+* Call the appropriate operations
+
+It is simply a control system.
+
+The CPU’s power lies not in performing every operation, but in deciding *which operation runs, when, and in what order*.
+
+It is an orchestrator. 
+
+And this is where something clicked for me.
+
+
+
+![Diagram comparing classical CPU orchestration with AI agent tool-calling and retrieval](/images/articles/ai-agents-inline.png)
+
+## Now Look at Modern AI Agents
+An AI agent built around an LLM behaves similarly.
+
+At runtime, the system:
+
+1. Receives input  
+2. Interprets intent  
+3. Determines whether reasoning alone is sufficient  
+4. Decides whether to call a tool  
+5. Selects which tool to call  
+6. Incorporates external retrieval (RAG) if necessary  
+7. Integrates results  
+8. Produces output
+
+The LLM is not doing everything by itself either.
+
+It is coordinating execution across external capabilities.
+
+Sound familiar? 
+
+Yes, just like the CPU.
+
+### Skills Feel Like Installing New Software
+In another lecture, we were told there are two types of software on a computer: the system software and the application software. 
+
+An application software is installed by the user to perform a specific task or solve a specific problem, e.g. Microsoft Word, Spreadsheet, Design Tools, etc. 
+
+Most importantly, we were told that without application software, a computer would have just been an ordinary electronic device that can only do basic operations.
+
+In some AI agent frameworks, you can extend capabilities by defining new skills, sometimes as simple as a structured markdown file.
+
+When I saw that, I couldn’t help but think:
+
+Isn’t this similar to installing new software on a computer?
+
+A computer becomes more powerful when you install applications.
+
+An AI agent becomes more capable when you add skills.
+
+Same pattern, but just a different abstraction layer.
+
+### RAG Looks Like External Memory
+Then there’s RAG, Retrieval-Augmented Generation, which adds another layer to this parallel.
+
+Instead of relying only on what’s inside the model’s parameters, the RAG system:
+
+1. Searches external knowledge bases (long-term memory?)  
+2. Retrieves relevant information  
+3. Inject it into the context window (working memory?)  
+4. Uses it to reason
+
+That feels a lot like what we’re used to in a traditional computer:
+
+* Fetching from disk  
+* Loading into memory (RAM)  
+* Then executing
+
+Again, the same architectural principle.
+
+### Tool-Calling Feels Like System Calls
+In classical operating systems:
+
+* User applications do not directly control hardware.  
+* They invoke system calls.  
+* The OS mediates execution.
+
+In agent architectures:
+
+* The model does not directly execute code.  
+* It emits a structured tool call.  
+* The orchestration layer executes the function.  
+* The result is fed back into context.
+
+This means we have recreated system calls, but now the caller is a probabilistic model instead of a deterministic user application.
+
+So, this isn’t magic?
+
+## Is the LLM Becoming a Software-Level CPU?
+Now, this is the thought that keeps forming in my mind:
+
+Within an agent system, the LLM functions like a software-level CPU.
+
+Not hardware, but a high-level control plane; because:
+
+1. It does not execute arithmetic directly.  
+2. It does not access memory directly.  
+3. It does not perform input/output operations directly.
+
+Instead:
+
+1. It decides.  
+2. It sequences.  
+3. It orchestrates.
+
+That sounds familiar.
+
+And, in that sense, we are witnessing the emergence of a new abstraction layer:
+
+From:
+
+* Hardware CPU controlling instructions
+
+To:
+
+* Software model controlling capabilities
+
+The locus of control has shifted upward, from silicon to probability distributions.
+
+## Why This Matters (At Least To Me)
+Revisiting foundational Computer Science concepts while watching AI evolve has been humbling for me.
+
+It reminds me that every technological leap feels magical at first. But when you understand the foundations deeply, new technologies stop looking magical. 
+
+You start seeing patterns. And once you see patterns, you can build better systems.
+
+I don’t have this fully formed yet. But I know this much:
+
+The more I study first principles, the more AI makes sense.
+
+And that’s a good place to be.
+
+### References
+1. Patterson, D. A., & Hennessy, J. L. *Computer Organization and Design: The Hardware/Software Interface.*
+
+2. Lewis, P., et al. (2020). *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.*

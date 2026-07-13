@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, FileDown, Star } from 'lucide-react';
 import { useContact } from './contact/ContactProvider';
-import { site } from '@/data/site';
 
 export function Hero() {
   const { open } = useContact();
@@ -40,24 +39,11 @@ export function Hero() {
       <div className="relative max-w-7xl mx-auto w-full grid lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 items-center">
         {/* Left: copy */}
         <div>
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-500/30 bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-[11px] font-medium mb-5"
-          >
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-brand-500" />
-            </span>
-            Available for new projects · 2026
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-slate-900 dark:text-slate-50"
+            className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight leading-[1.1] text-slate-900 dark:text-slate-50"
           >
             I build software that ships, <br className="hidden sm:block" />
             and <span className="text-gradient-brand">SEO that ranks.</span>
@@ -86,14 +72,14 @@ export function Hero() {
               className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold shadow-xl shadow-brand-600/30 hover:shadow-brand-600/50 transition-all hover:-translate-y-0.5"
             >
               <Sparkles className="h-4 w-4" />
-              Start a project
+              Start a Project
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </button>
             <Link
               href="/projects"
               className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-sm font-semibold transition-colors"
             >
-              View past work
+              View Past Work
             </Link>
             <a
               href="/tayo-adepetu-resume.pdf"
@@ -104,19 +90,6 @@ export function Hero() {
               <FileDown className="h-4 w-4" />
               Resume
             </a>
-          </motion.div>
-
-          {/* Quick stats strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl"
-          >
-            <QuickStat value={site.upworkStats.completedProjects} label="Projects delivered" />
-            <QuickStat value={site.upworkStats.successRate} label="Job success" />
-            <QuickStat value={site.upworkStats.rank} label="Upwork rank" />
-            <QuickStat value={site.upworkStats.deliveryTime} label="Delivery window" />
           </motion.div>
         </div>
 
@@ -191,14 +164,5 @@ export function Hero() {
         </motion.div>
       </div>
     </section>
-  );
-}
-
-function QuickStat({ value, label }: { value: string; label: string }) {
-  return (
-    <div>
-      <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-50">{value}</div>
-      <div className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5">{label}</div>
-    </div>
   );
 }
