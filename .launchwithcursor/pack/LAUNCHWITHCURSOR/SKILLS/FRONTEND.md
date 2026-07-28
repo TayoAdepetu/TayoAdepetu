@@ -60,17 +60,19 @@ Always prefer:
 
 ---
 
-## 3. Mobile = PWA First (Not Native Apps)
+## 3. Mobile Strategy Follows MVP-SPEC
 
-For MVP mobile experiences on LaunchWithCursor:
+**MVP-SPEC.md defines the mobile strategy** — PWA, native app, responsive web only, or desktop-only. Do not override the spec with platform defaults.
 
-- **Default:** Progressive Web App (installable from the browser)
-- **Stack:** Same React / Next.js app — responsive + PWA manifest + service worker
-- **Do not use** React Native, Expo, or app store builds during MVP
+When MVP-SPEC calls for PWA:
 
-Implement PWA in Phase 4 before launch. Follow [PWA.md](./PWA.md) for manifest, icons, install UX, and testing.
+- Same React / Next.js app — responsive + PWA manifest + service worker
+- Implement in Phase 4 before launch
+- Follow [PWA.md](./PWA.md) for manifest, icons, install UX, and testing
 
-Native apps are a post-MVP decision (after product-market fit) — not part of the founder guide path.
+When MVP-SPEC calls for native mobile (Expo, React Native, etc.), follow the spec's stack and user flows.
+
+When MVP-SPEC is desktop-only, optimize for desktop — still use accessible, responsive layouts where helpful, but skip PWA install UX.
 
 ---
 
@@ -80,7 +82,9 @@ Native apps are a post-MVP decision (after product-market fit) — not part of t
 
 When the AI outlines a project plan, roadmap, or development phases (weeks, milestones, sprints), **each phase must explicitly reference the applicable rules from this document**.
 
-For **hosting, env vars, database, Redis, R2, deploy manifest, and PWA** requirements, also apply [`Infrastructure.md`](./Infrastructure.md) and [`PWA.md`](./PWA.md) from Phase 1 onward — especially Infrastructure Rules 2–4, 13, and the Phase 1 checklist.
+For **hosting, env vars, database, Redis, R2, deploy manifest, and PWA** requirements, also apply [`Infrastructure.md`](./Infrastructure.md) and [`PWA.md`](./PWA.md) from Phase 1 onward — especially Infrastructure Rules 2–4, 8, 13, and the Phase 1 checklist.
+
+**Monorepo deploy:** if web/admin import `@myorg/*` from `packages/*`, their `build` scripts must compile workspace deps before `next build` (same as api before `nest build`). See SETUP.md § monorepo workspace packages.
 
 Do not treat frontend standards as implicit. Call them out so implementation stays consistent.
 
@@ -686,6 +690,19 @@ Always design:
 
 Polished products handle edge states beautifully.
 
+### Skeleton loading for fetched lists (required)
+
+Whenever a **list** (or table of rows) is retrieved asynchronously — from an API, TanStack Query, server action, loader, etc. — and will be shown in the UI, **always use skeleton loading boxes while the data is still being retrieved**.
+
+Rules:
+
+- show skeleton placeholders that mirror the final list/table layout (row shape, density, approximate item count) — not a blank screen, spinner-only, or layout jump
+- keep skeletons until the fetch settles (success or error); then swap to real content, empty state, or error state
+- prefer shared skeleton components (e.g. shadcn `Skeleton`) so list loading looks consistent across the app
+- apply the same rule to cards-in-a-grid, feeds, and any repeated item list — not only classic `<ul>` / table UIs
+
+Do not ship list screens that flash empty or sit idle with no structure while data loads.
+
 ---
 
 # AI-Specific Instructions
@@ -844,7 +861,7 @@ Every UI should look:
 
 - startup-ready
 - investor-ready
-- installable PWA-ready (mobile home screen)
+- mobile-ready when MVP-SPEC targets mobile users (PWA install UX only if spec requires it)
 - enterprise-capable
 
 Never ship “AI-looking” interfaces.

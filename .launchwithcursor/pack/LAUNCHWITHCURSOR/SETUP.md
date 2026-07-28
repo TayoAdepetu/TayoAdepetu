@@ -1,6 +1,6 @@
 # LaunchWithCursor Setup Skill
 
-<!-- launchwithcursor-setup-version: 0.2.3 -->
+<!-- launchwithcursor-setup-version: 0.2.11 -->
 
 > **You are an AI coding assistant (e.g. Cursor). The human asked you to "read this file and do what it says."**
 > Follow the steps below in order, top to bottom. Do the work for the user — run the commands, create the files, and explain what you did in plain language. The user is a non-engineer shipping an MVP, so keep your explanations short and friendly, and never ask them to memorize commands.
@@ -23,9 +23,9 @@ The end result is a committed `launchwithcursor.deploy.json` file (the "deploy m
 | Name | Value |
 | --- | --- |
 | Extension ID | `codeknowledge.codeknowledge` |
-| Extension download URL | `https://codeknowledgeapi.thetayoadepetu.com/v1/extension/download` |
-| Extension version info URL | `https://codeknowledgeapi.thetayoadepetu.com/v1/extension/latest` |
-| Dashboard URL | `https://codeknowledge.thetayoadepetu.com` |
+| Extension download URL | `https://api.launchwithcursor.com/v1/extension/download` |
+| Extension version info URL | `https://api.launchwithcursor.com/v1/extension/latest` |
+| Dashboard URL | `https://launchwithcursor.com` |
 
 ---
 
@@ -36,7 +36,7 @@ The extension is distributed as a downloadable `.vsix` (it is **not** on the VS 
 1. Fetch the latest published version:
 
    ```bash
-   curl -fsSL https://codeknowledgeapi.thetayoadepetu.com/v1/extension/latest
+   curl -fsSL https://api.launchwithcursor.com/v1/extension/latest
    ```
 
    Note the `version` field in the JSON response (call this **latestVersion**).
@@ -55,7 +55,7 @@ The extension is distributed as a downloadable `.vsix` (it is **not** on the VS 
 3. Download the latest package and install or upgrade it. Use whichever editor command exists (`cursor` or `code` — both accept the same flags):
 
    ```bash
-   curl -fsSL -o /tmp/codeknowledge.vsix https://codeknowledgeapi.thetayoadepetu.com/v1/extension/download
+   curl -fsSL -o /tmp/codeknowledge.vsix https://api.launchwithcursor.com/v1/extension/download
    cursor --install-extension /tmp/codeknowledge.vsix || code --install-extension /tmp/codeknowledge.vsix
    ```
 
@@ -70,7 +70,7 @@ The extension is distributed as a downloadable `.vsix` (it is **not** on the VS 
 
 1. Make sure the project is the **first/only folder** open in the editor (the extension uses the first workspace folder).
 2. If `.launchwithcursor/project.json` already exists at the project root, the user is already signed in — confirm the folder is present, then skip to **Step 3**.
-3. Otherwise, tell the user to run **LaunchWithCursor: Sign In** from the Command Palette. This opens their browser to approve the connection — they must click **Approve** there (this one click cannot be automated). They need to already be signed in to the dashboard at `https://codeknowledge.thetayoadepetu.com` (GitHub login).
+3. Otherwise, tell the user to run **LaunchWithCursor: Sign In** from the Command Palette. This opens their browser to approve the connection — they must click **Approve** there (this one click cannot be automated). They need to already be signed in to the dashboard at `https://launchwithcursor.com` (GitHub login).
 4. After approval, the extension scans automatically and installs the starter pack under `.launchwithcursor/pack/`. Confirm success by checking that `.launchwithcursor/project.json` exists.
 5. Ensure `.gitignore` ignores only the extension cache (not the whole kit):
 
@@ -133,10 +133,22 @@ Notes:
 
 ## Step 4 — Make each app deploy-ready (per-stack rules)
 
-The PaaS builds each service as a container behind a router. **Next.js** apps use a slim standalone image by default (~150–400 MB); other stacks use **Nixpacks** (auto-detects build/start). Two rules matter for every stack:
+The PaaS builds each service as a container behind a router. **Next.js** and **NestJS** use automatic **slim Docker** images (~150–500 MB). Other stacks (Express, Laravel, Vite, Python, etc.) use **Nixpacks** with filtered monorepo installs. Founders do **not** choose a build strategy — the platform picks from each service's `framework` in the manifest. Two rules matter for every stack:
 
-- **Listen on the port from the `PORT` environment variable**, defaulting to `3000`. The platform routes traffic to that port. Hard-coded ports other than what you declare in the manifest will not receive traffic.
+- **Listen on the port from the `PORT` environment variable**, defaulting to `3000`. The platform sets `PORT` from each service's **internalPort** and routes Traefik to that port. Hard-coded ports or legacy `WEB_PORT` / `API_PORT` vars will not receive traffic on PaaS.
 - **Provide a real build and start command** (or rely on the framework's standard `build`/`start` scripts).
+
+### Legacy PM2 / multi-port local dev
+
+If the repo uses `API_PORT`, `WEB_PORT`, or `ADMIN_PORT` for **local dev** or an old **PM2** setup (unique ports on one VPS), that model does not carry over to PaaS:
+
+| Legacy (PM2 on one VPS) | PaaS (one container per service) |
+|-------------------------|----------------------------------|
+| api on 3006, web on 3004 | each service `internalPort: 3000` |
+| Traefik → `host.docker.internal:3004` | Traefik → container by **hostname** |
+| set `WEB_PORT` in `.env` | platform sets `PORT` automatically |
+
+**Do not** add `API_PORT` / `WEB_PORT` to the dashboard. Set **`internalPort: 3000`** on every service in the manifest. Ensure production start commands use `PORT` (Next.js `next start`, Nest `process.env.PORT`, etc.). Keep `*_PORT` in `.env.example` only for local dev, with a comment that PaaS ignores them.
 
 Apply the matching rules below. Make the minimal edits needed; tell the user what you changed.
 
@@ -169,7 +181,147 @@ Ignored build scripts: @prisma/client, prisma, sharp, argon2, ...
 Run "pnpm approve-builds" to pick which dependencies should be allowed
 ```
 
-**Related:** ensure `prisma generate` runs before the production build (`postinstall`, or `"build": "prisma generate && …"`). Warnings like `husky: .git can't be found` during Docker install are normal and safe to ignore.
+**Related:** run `prisma generate` in the **API service build script** (not root `postinstall` when you also host Next.js frontends — see [Prisma generate placement](#prisma-generate--api-only-not-root-postinstall-in-monorepos) below). Use `"prepare": "husky || true"` (or skip husky in CI) so Docker install does not fail when `.git` is missing. Warnings like `husky: .git can't be found` or `@prisma/client postinstall: We could not find your Prisma schema` during **web/admin install** are normal in monorepos — ignore them if the API build generates the client.
+
+### Monorepo — workspace packages (`packages/*`) — required for every project
+
+Shared libraries under `packages/*` are common in monorepos (`@myorg/shared`, `@myorg/types`, `@myorg/ui`). **Every hosted service that imports a workspace package must follow these rules** — api, web, and admin alike.
+
+#### Why this matters on LaunchWithCursor
+
+The platform runs **`cd '<rootDir>' && pnpm run build`** per service. It does **not** run root `turbo run build` unless your service `build` script does.
+
+| Service | Build command (typical) | Runtime |
+| --- | --- | --- |
+| **api** | `nest build` → `node dist/main.js` | Plain Node — resolves `packages/*` via each package's `main` / `exports` |
+| **web / admin** | `next build` → standalone server | Webpack bundles at build time — still needs `dist/` to **exist** when `exports` point there |
+
+**Do not fix only the API.** If you point `packages/shared` at `dist/` (required for NestJS), **web and admin that import `@myorg/shared` must compile it before `next build`** or Docker fails with `Can't resolve '@myorg/shared'`.
+
+`transpilePackages` in `next.config` does **not** replace pre-building workspace libs when those libs export from `./dist/` — there is no `dist/` on a fresh clone until each package's `build` script runs.
+
+#### Symptom A — web/admin/api build fails in Docker
+
+```text
+Module not found: Can't resolve '@myorg/shared'
+```
+
+`dist/` is gitignored and was never built before `next build` / `nest build`.
+
+#### Symptom B — api build passes, api crash-loops in production (web/admin may still load)
+
+Deploy log shows **`Deploy complete`** for api, dashboard says **running**, web/admin load, but API returns **404** or browser shows **CORS** errors. On the VPS, `docker ps` shows **`Restarting (1)`** and logs contain:
+
+```text
+file:///app/packages/shared/src/index.ts:1
+SyntaxError: Unexpected identifier 'ClassValue'
+```
+
+**Cause:** NestJS compiled to `dist/`, but `require('@myorg/shared')` still resolves to **`packages/*/src/*.ts`**. Node cannot execute TypeScript.
+
+#### Agent checklist — when creating or importing `packages/*`
+
+Apply **all steps in one pass** for every monorepo you scaffold — do not ship api-only fixes.
+
+1. **`package.json` exports compiled output only** — never point `main`, `types`, or `exports` at `./src/`:
+
+```json
+{
+  "name": "@myorg/shared",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}
+```
+
+2. **Every hosted app that imports workspace packages** — add `pnpm --filter …^... run build` **before** the framework build:
+
+**API** (`apps/api/package.json`):
+
+```json
+"build": "prisma generate && pnpm --filter @myorg/api^... run build && nest build"
+```
+
+**Web** (`apps/web/package.json`):
+
+```json
+"build": "pnpm --filter @myorg/web^... run build && next build"
+```
+
+**Admin** (`apps/admin/package.json`) — same pattern if it imports `@myorg/*`:
+
+```json
+"build": "pnpm --filter @myorg/admin^... run build && next build"
+```
+
+Use real package names from the repo. `^...` = all workspace dependencies of that app.
+
+- If a package is **only** consumed via Next `transpilePackages` **and** you intentionally keep a separate dev-only export map, document that exception — default is still **build deps first + export `dist/`** for all shared libs used by the API.
+- Exclude packages that fail `tsc` in Docker (e.g. UI libs with React Native entrypoints) with an extra `--filter "!@myorg/ui"` when needed.
+
+3. **Verify locally before every deploy** (simulates a fresh Docker clone — run **all** hosted apps):
+
+```bash
+rm -rf packages/*/dist apps/api/dist apps/web/.next apps/admin/.next
+
+cd apps/api && pnpm run build && node dist/src/main.js
+# Ctrl+C after Nest starts — must not SyntaxError or Cannot find module
+
+cd ../web && pnpm run build
+cd ../admin && pnpm run build   # skip if not hosted
+```
+
+If any step fails locally, production will fail the same way.
+
+4. **Do not rely on TypeScript path aliases alone** — `tsconfig` paths are compile-time; NestJS does not bundle workspace deps unless you add a bundler. Runtime resolution uses each package's `exports` / `main`.
+
+5. **Phase 1 scaffolding rule for agents:** when you add `packages/shared` (or any `packages/*` imported by api **and** web/admin), update **api + web + admin `build` scripts in the same commit** — never merge api-only workspace fixes.
+
+### Prisma generate — API only, not root `postinstall` in monorepos
+
+**Do not** add `"postinstall": "prisma generate"` to the **repository root** when:
+
+- Prisma schema lives at repo root (`prisma/schema.prisma`), **and**
+- You host **Next.js** apps with the platform's **standalone Docker** builder.
+
+That builder runs `pnpm install` with a **slim context** (`apps/` + `packages/` only). There is **no `prisma/` folder** during web/admin install, so root `postinstall` **fails the deploy**.
+
+**Instead:** run `prisma generate` in the **API service build script** (with `--schema=…` if the schema is not under the API's `rootDir`).
+
+**Prisma query engine on Linux containers** — add `binaryTargets` to `schema.prisma` so production can load the engine inside slim Docker / Nixpacks images:
+
+```prisma
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+```
+
+Use `native` for local dev; `debian-openssl-3.0.x` for hosted Linux containers. Missing target → **Query engine not found** at runtime.
+
+**API slim Docker (pnpm monorepos)** — after the Nest build, the platform runs **`pnpm deploy --filter '<api-package-name>' --prod`** (single package — no `...` suffix) to bundle the API and its workspace dependencies into a prod-only runtime image (~200–500 MB). It does **not** run root `pnpm prune` (that breaks when web/admin Next apps share the same lockfile). Founders do **not** add a Dockerfile or `inject-workspace-packages`. On **pnpm 10+**, the platform may pass `--legacy` for deploy; **pnpm 9** omits it.
+
+**Next.js standalone** uses a slim install context (`apps/` + `packages/` only) — root `postinstall: prisma generate` still breaks web/admin builds when schema is at repo root.
+
+Full monorepo API checklist: [NestJS monorepo — slim Docker + pnpm deploy](#nestjs-monorepo--slim-docker--pnpm-deploy).
+
+### Next.js monorepo — sync `rootDir` per service
+
+Each Next app needs `rootDir` in the manifest (e.g. `apps/web`, not `.`) **and** the same value on the dashboard after **Sync from repo**.
+
+**Symptom:** Deploy fails before Docker build: `No next.config found at repo root` while another Next app deploys fine.
+
+**Cause:** The failing service was created before the manifest existed, or **Sync from repo** was not run — its hosted record still uses repo root (`.`).
+
+**Fix:** Dashboard → **Deploy → Sync from repo** → confirm **Services** shows `apps/web` (not `.`) → redeploy.
 
 ### Database, migrations, and seeds (decide per project)
 
@@ -192,34 +344,82 @@ Inspect the repo and answer these yourself (paths differ per project):
 2. **Where is the schema?** Examples: `prisma/schema.prisma`, `apps/api/prisma/schema.prisma`, Laravel's `database/migrations/`. Note the directory relative to repo root and relative to the service's `rootDir`.
 3. **Are migration files committed?** Prisma needs a `prisma/migrations/` folder with SQL (from `prisma migrate dev` / `prisma migrate diff`), not just `schema.prisma`. Laravel needs `database/migrations/`. If only a schema exists, create and commit migrations before expecting tables on the PaaS.
 4. **How does the team run migrations locally?** Check `package.json` scripts, `composer.json`, Makefile, or docs. Prefer the same tool the project already uses (`prisma migrate deploy`, `php artisan migrate --force`, `django migrate`, etc.).
-5. **Where must the command run?** The platform container **WORKDIR is the repository root** (`/app`). For monorepos, **build** and **start** commands get an automatic `cd '<rootDir>' && …` prefix when Nixpacks builds the image. **Migrate and seed commands do not** — you must encode the correct working directory or schema path in the manifest string itself when the tool expects to run inside the app folder.
+5. **Where must the command run?** One-off **migrate** and **seed** containers use **WORKDIR `/app`**. How `/app` is laid out depends on the build:
+
+| Stack | Runtime layout in `/app` | Typical `migrateCommand` when Prisma is under `apps/api/prisma/` |
+| --- | --- | --- |
+| **NestJS monorepo (slim Docker + pnpm deploy)** | Flattened API package: `./dist/`, `./prisma/`, `./node_modules/` | `npx prisma migrate deploy` (no `cd apps/api`) |
+| **NestJS monolith** (`rootDir: "."`) | Same as repo root | `npx prisma migrate deploy` |
+| **Nixpacks / other** | Often full monorepo tree at `/app` | `cd apps/api && npx prisma migrate deploy` or `--schema apps/api/prisma/schema.prisma` |
+
+For **build** and **start**, monorepo Nest/Next slim Docker still runs `cd '<rootDir>' && …` during the **build** stage only. **Migrate and seed do not** get an automatic `cd` — encode the path that matches the **running** container layout (table above).
 
 ```text
-For migrateCommand / seedCommand, pick the approach that matches how the tool resolves paths:
+For migrateCommand / seedCommand, pick the approach that matches the running container:
+
+├── NestJS monorepo + pnpm (framework: "nestjs", rootDir: apps/api)
+│   └── Slim deploy flattens to /app — use plain:
+│       npx prisma migrate deploy
+│       npx prisma db seed
+│       (schema at apps/api/prisma/ in Git → prisma/ in the container)
 
 ├── Schema/migrations live at repo root (rootDir is ".")
 │   └── Often plain: npx prisma migrate deploy
 │       (verify with local dry-run from repo root)
 
-├── Schema/migrations live under rootDir (e.g. apps/api/prisma/)
+├── Schema/migrations live under rootDir on Nixpacks / non-deploy layouts
 │   ├── Option A: cd into rootDir first
 │   │   └── e.g. cd apps/api && npx prisma migrate deploy
-│   │       (use the actual rootDir you set in the manifest)
-│   ├── Option B: explicit --schema / config flag
+│   ├── Option B: explicit --schema flag
 │   │   └── e.g. npx prisma migrate deploy --schema apps/api/prisma/schema.prisma
 │   └── Option C: package-manager filter from root
 │       └── e.g. pnpm --filter @myorg/api exec prisma migrate deploy
-│           (only if that is already how the repo runs migrations)
 
 └── Non-Node stack (Laravel, Django, etc.)
     └── Run from the app root (same rootDir rules apply)
         e.g. cd apps/api && php artisan migrate --force
 ```
 
-**Do not assume** `npx prisma migrate deploy` works from repo root in a monorepo just because it works in a monolith at `.` — confirm where `prisma/schema.prisma` lives relative to `/app` in the container.
+**Do not assume** one migrate string works for every monorepo — Nest slim **deploy** layout differs from Nixpacks full-tree layout.
 
 6. **Seeds must be idempotent.** `seedCommand` runs on **every** deploy after migrate. Use upsert / find-or-create patterns, not blind inserts.
-7. **Provision order for first deploy:** (a) commit manifest + migrations, (b) enable hosting / sync services, (c) **provision database** on dashboard, (d) deploy the service with migrateCommand, (e) check **Deploy → Database → Manage data** for tables.
+7. **Production seeds must run as JavaScript** when the API uses Nest slim + `pnpm deploy --prod` — see [Production seeds](#production-seeds-nest-slim--pnpm-deploy) below. Do **not** leave `prisma.seed` pointing at `ts-node` or `tsx`.
+8. **Provision order for first deploy:** (a) commit manifest + migrations, (b) enable hosting / sync services, (c) **provision database** on dashboard, (d) deploy the service with migrateCommand, (e) check **Deploy → Database → Manage data** for tables.
+
+#### Production seeds (Nest slim / pnpm deploy)
+
+`seedCommand: "npx prisma db seed"` runs whatever is configured in **`package.json` → `prisma.seed`** (usually in `apps/api/package.json`). The Nest slim runtime image is built with **`pnpm deploy --prod`**, which ships **production dependencies only** — not `ts-node`, `tsx`, or other dev-only runners.
+
+| Symptom | Cause |
+| --- | --- |
+| Migrate succeeds; seed fails with `spawn ts-node ENOENT` or `tsx ENOENT` | `prisma.seed` uses TypeScript tooling that is not in the prod bundle |
+| Seed fails after Docker build with Prisma 7 validation errors on `url = env("DATABASE_URL")` | Bare `npx prisma` pulled latest CLI; pin `prisma` to match `@prisma/client` |
+
+**Required for hosted deploy:**
+
+1. **Compile the seed to JavaScript** in the API `build` script (e.g. emit `dist/prisma/seed.js` via `tsc`, or include `prisma/seed.ts` in Nest's compile output).
+2. Point **`prisma.seed`** at Node — not TypeScript runners:
+
+```json
+"prisma": {
+  "seed": "node dist/prisma/seed.js"
+}
+```
+
+3. Keep manifest `seedCommand` as `npx prisma db seed`, or set `seedCommand` to `node dist/prisma/seed.js` directly.
+4. **Pin Prisma versions** in `apps/api/package.json` — use exact matching versions for `prisma` and `@prisma/client` (e.g. `"6.19.3"`), not wide ranges like `"^6.1.0"` that leave the hosted CLI on an older patch than the lockfile-resolved client.
+
+Local dev may still use `tsx prisma/seed.ts` in a separate `db:seed` script — only **`prisma.seed`** (used by `npx prisma db seed` in production) must run plain Node.
+
+**Verify locally** (from repo root, replace `@myorg/api` with your API package name):
+
+```bash
+cd apps/api && pnpm run build
+cd ../.. && CI=true pnpm --filter '@myorg/api' --prod deploy /tmp/api-deploy
+cd /tmp/api-deploy && npx prisma db seed
+```
+
+The last command must succeed **without** `ts-node` or `tsx` installed globally or in the deploy folder.
 
 #### What to look for in deploy logs (api / DB-owning service)
 
@@ -230,7 +430,9 @@ After `Running migrate: …` you should see tool output (Prisma: “schema loade
 - No migration files in Git on the deployed branch.
 - Database was provisioned after a deploy that skipped migrate — redeploy api after provisioning.
 
-Build logs may show `We could not find your Prisma schema in the default locations` during **root** `pnpm install` — that is normal in monorepos. The **build** phase should still load the schema from under `rootDir` (e.g. `cd 'apps/api' && pnpm run build` → `Prisma schema loaded from prisma/schema.prisma`). Migrate must be configured to use that same logical app root.
+Build logs may show `We could not find your Prisma schema in the default locations` during **filtered** `pnpm install` — that is normal in monorepos. The **build** phase should still load the schema from under `rootDir` (e.g. `cd 'apps/api' && pnpm run build` → `Prisma schema loaded from prisma/schema.prisma`). For Nest monorepos, migrate/seed run against the **deployed** layout (`./prisma` at `/app`), not `apps/api/prisma`.
+
+Successful Nest monorepo slim builds show `pnpm --filter '@your/api' --prod deploy '/prod/deploy'` after `webpack compiled successfully` — not `pnpm prune --prod` at repo root.
 
 ### Redis, queues, and job workers (decide per project)
 
@@ -344,7 +546,7 @@ await fetch(process.env.EMAIL_API_URL!, {
   - Vite: build outputs to `dist/` → start with `npx serve -s dist -l ${PORT:-3000}`.
   - CRA: build outputs to `build/` → start with `npx serve -s build -l ${PORT:-3000}`.
 - `internalPort`: `3000`, `kind`: `website`.
-- **PWA:** if customer-facing on mobile, follow `LAUNCHWITHCURSOR/SKILLS/PWA.md` Rule 7 (`vite-plugin-pwa`).
+- **PWA:** only when **MVP-SPEC.md** calls for PWA — follow `LAUNCHWITHCURSOR/SKILLS/PWA.md` Rule 7 (`vite-plugin-pwa`).
 
 ### Next.js
 
@@ -359,16 +561,66 @@ await fetch(process.env.EMAIL_API_URL!, {
 
 - `internalPort`: `3000`. `kind`: `website` (use `api` only if it has API routes but no pages).
 
-- **PWA (customer-facing apps):** if end users open this app on mobile, implement PWA per `LAUNCHWITHCURSOR/SKILLS/PWA.md` — web app manifest, icons under `public/icons/`, theme color, and optional service worker for offline shell. No extra platform config needed.
+- **PWA:** only when **MVP-SPEC.md** calls for an installable web app — implement per `LAUNCHWITHCURSOR/SKILLS/PWA.md` (web app manifest, icons under `public/icons/`, theme color, optional service worker). No extra platform config needed.
 
 ### NestJS (and other Node APIs)
 
+- The platform builds NestJS (`framework: "nestjs"`) with **slim Docker automatically** (~200–500 MB). Deploy logs show `docker build (NestJS slim)`. No Dockerfile in the repo.
 - Ensure `build` and a production start script in **`package.json`** (e.g. `nest build`, `node dist/main.js`).
 - In the manifest, prefer `buildCommand: null` or `pnpm run build` / `npm run build` — not bare `nest build`.
 - Make `main.ts` listen on `process.env.PORT ?? 3000`.
-- **Database:** apply the [database checklist](#agent-checklist--before-writing-migratecommand--seedcommand). For a typical Prisma + Nest service in `apps/api`, migrate/seed often need to run **from that folder** or with an explicit schema path — derive the exact string from the repo; do not copy a generic example without verifying paths.
+- **Monorepo (pnpm):** see [NestJS monorepo — slim Docker + pnpm deploy](#nestjs-monorepo--slim-docker--pnpm-deploy) — package `name`, workspace build order, migrate/start commands.
+- **Database:** apply the [database checklist](#agent-checklist--before-writing-migratecommand--seedcommand). Nest monorepos use **plain** `npx prisma migrate deploy` (no `cd apps/api`) because the runtime image is flattened.
 - **Redis / queues:** if the API uses BullMQ or similar, set `needsRedis: true` and configure workers with `REDIS_URL` + `REDIS_KEY_PREFIX` per the [Redis checklist](#redis-queues-and-job-workers-decide-per-project).
 - `internalPort`: match what the app uses (often `3000`). `kind`: `api`.
+
+### NestJS monorepo — slim Docker + pnpm deploy
+
+When `framework: "nestjs"` and the repo is a **pnpm monorepo**, the platform:
+
+1. **Installs** only the API subgraph (`pnpm install --filter '@yourscope/api...'`).
+2. **Builds** with `cd '<rootDir>' && pnpm run build` (your manifest `buildCommand` or auto-detect).
+3. **Deploys** a prod bundle with `pnpm --filter '@yourscope/api' --prod deploy` into the runtime image (install still uses `@yourscope/api...`).
+
+Founders **do not** add Dockerfiles, `inject-workspace-packages`, or a build-strategy toggle. You **do** need:
+
+| Requirement | Why |
+| --- | --- |
+| **`name` in `apps/api/package.json`** (e.g. `"@myorg/api"`) | Platform filter for install + deploy |
+| **Workspace deps built in API `build` script** | `pnpm --filter @myorg/api^... run build && nest build` — deploy copies compiled `packages/*/dist/` |
+| **`startCommand`: `node dist/main.js`** (or `node dist/src/main.js`) | Runtime `/app` is the deployed API root — **no** `cd apps/api` in start |
+| **`migrateCommand` / `seedCommand` without `cd`** | e.g. `npx prisma migrate deploy` — schema is at `./prisma` in the container |
+| **`prisma.seed` runs compiled JS** | Prod deploy excludes devDeps — use `"seed": "node dist/prisma/seed.js"`, not `ts-node` / `tsx` (see [Production seeds](#production-seeds-nest-slim--pnpm-deploy)) |
+| **`prisma` and `@prisma/client` pinned to same version** | Avoid CLI/client mismatch warnings during `prisma generate` in Docker |
+| **`binaryTargets`** in `schema.prisma` | See [Prisma generate](#prisma-generate--api-only-not-root-postinstall-in-monorepos) |
+| **`pnpm.onlyBuiltDependencies`** when using Prisma, argon2, sharp, etc. | See [pnpm allow install scripts](#pnpm--allow-install-scripts-prisma-sharp-native-modules) |
+| **Committed `pnpm-lock.yaml`** | Install uses `--frozen-lockfile` |
+
+**Manifest example (api service only):**
+
+```json
+{
+  "name": "api",
+  "framework": "nestjs",
+  "rootDir": "apps/api",
+  "startCommand": "node dist/main.js",
+  "migrateCommand": "npx prisma migrate deploy",
+  "seedCommand": "npx prisma db seed"
+}
+```
+
+**Local verify before deploy** (from repo root):
+
+```bash
+cd apps/api && pnpm run build
+cd ../.. && CI=true pnpm --filter '@myorg/api' --prod deploy /tmp/api-deploy
+ls /tmp/api-deploy/dist/main.js /tmp/api-deploy/prisma/schema.prisma
+cd /tmp/api-deploy && npx prisma db seed
+```
+
+Replace `@myorg/api` with your API package name. On **pnpm 10+** only, add `--legacy` to the deploy command if your local pnpm version requires it. If deploy fails, fix workspace `build` scripts first (SETUP.md § [monorepo workspace packages](#monorepo--workspace-packages-packages---required-for-every-project)). If seed fails with `ts-node ENOENT`, fix `prisma.seed` per [Production seeds](#production-seeds-nest-slim--pnpm-deploy).
+
+**Deploy log success pattern:** `webpack compiled successfully` → `pnpm --filter '…' --prod deploy '/prod/deploy'` → image push. Failures after a successful Nest build usually mean workspace packages were not compiled to `dist/` before deploy.
 
 ### Laravel (PHP) — not in MVP founder path
 
@@ -404,6 +656,15 @@ Create or update `.env.example` with keys only (no secrets). Never commit real `
 
 **Monorepo front-end → API URL:** `NEXT_PUBLIC_API_URL` must be a **full absolute URL with `https://`** (e.g. `https://api.example.com/api/v1`), not `localhost` and not a bare hostname — otherwise the browser treats it as a path on the web/admin origin.
 
+**Server-side API URL (separate containers):** When web and api are **different hosted services**, there is no shared `127.0.0.1` between containers. On web/admin in production:
+
+| Variable | Production |
+| --- | --- |
+| `NEXT_PUBLIC_API_URL` | **Required** — full `https://api.example.com` URL |
+| `INTERNAL_API_URL` | **Leave unset** — server code should fall back to `NEXT_PUBLIC_API_URL` |
+
+Use `INTERNAL_API_URL=http://127.0.0.1:…` only for **local dev** or legacy PM2 on one VPS. Do not copy it from a laptop `.env` into the dashboard.
+
 **Monorepo CORS:** on the api service, set `CORS_ORIGIN` to every browser origin that calls the API, comma-separated with no spaces:
 
 ```env
@@ -411,6 +672,33 @@ CORS_ORIGIN=https://app.example.com,https://admin.example.com
 ```
 
 Re-deploy the api after changing CORS or other server-only keys.
+
+### Deploy logs — noise vs real failures
+
+**`Deploy complete` means the container started** — confirm each service in the **browser**, not from logs alone.
+
+| Log pattern | Usually means |
+| --- | --- |
+| `@prisma/client postinstall: We could not find your Prisma schema` during **web/admin install** | Normal in monorepos — ignore if API build runs `prisma generate` |
+| `husky: .git can't be found` during install | Normal in Docker — use `"prepare": "husky \|\| true"` in root `package.json` |
+| `Redis probe … failed (continuing to start)` on web/admin with `needsRedis: false` | Should not appear — probes run only on services with `needsRedis: true`. If you see them, confirm **Sync from repo** updated the service flags |
+| `[redis:post-start] queue …` after web/admin deploy | Only logged when that service has `needsRedis: true` — otherwise check **api** deploy logs or **Deploy → Redis** |
+| `Staged next.config for Docker: apps/web/…` | Good — `rootDir` is correct for that Next service |
+| `Module not found: Can't resolve '@myorg/shared'` during **web/admin** build | Workspace `packages/*` export from `dist/` but web/admin build script does not compile deps before `next build` — fix **all** importing apps. See [monorepo workspace packages](#monorepo--workspace-packages-packages---required-for-every-project) |
+| `[startup:container-logs] … workspace package` / `SyntaxError: Unexpected identifier` / `packages/*/src/index.ts` | API crash-loop — workspace `packages/*` not built or `main`/`exports` point at `src/`. See [monorepo workspace packages](#monorepo--workspace-packages-packages---required-for-every-project) |
+| `docker build (NestJS slim)` + `pnpm --filter '…' --prod deploy` after Nest build | Good — monorepo API uses prod deploy bundle |
+| `pnpm prune --prod` failing with `next@…` / lockfile message after Nest build | Platform bug on old builders — redeploy after platform update; founders do not fix by regenerating lockfile alone |
+| API domain returns Traefik **404** while web/admin work; dashboard still **running** | Container may be **Restarting** — check **Deploy → Logs → api** or VPS `docker ps` / `docker logs` |
+
+**Post-deploy browser checks (adapt URLs):**
+
+| Service | Quick test |
+| --- | --- |
+| **web** | Homepage loads; sign-in; Network tab hits production API URL |
+| **admin** | Admin sign-in page loads |
+| **api** | Health or docs endpoint returns JSON |
+
+If the UI loads but auth/API fails: check `NEXT_PUBLIC_API_URL`, api `CORS_ORIGIN` / `CORS_ORIGINS`, and that secrets like `JWT_SECRET` are on **api** only.
 
 Deploy clones from GitHub; the deployer needs GitHub read access to the repo.
 
@@ -505,8 +793,8 @@ Use **your** paths and commands. The api entry below is illustrative — replace
       "rootDir": "apps/api",
       "buildCommand": null,
       "startCommand": "node dist/main.js",
-      "migrateCommand": "cd apps/api && npx prisma migrate deploy",
-      "seedCommand": "cd apps/api && npx prisma db seed",
+      "migrateCommand": "npx prisma migrate deploy",
+      "seedCommand": "npx prisma db seed",
       "internalPort": 3000,
       "needsDatabase": true,
       "needsRedis": false,
@@ -531,7 +819,7 @@ Use **your** paths and commands. The api entry below is illustrative — replace
 }
 ```
 
-> If your api `rootDir` is different (e.g. `services/backend`), change both `rootDir` and the `cd …` prefix to match. Alternative: `--schema path/to/schema.prisma` if that is how the repo is structured.
+> Nest monorepo slim Docker **flattens** `apps/api` into `/app` at runtime — migrate/seed use plain `npx prisma …` (no `cd apps/api`). Build still runs from `rootDir` via `cd 'apps/api' && pnpm run build`. If your api `rootDir` differs, keep `rootDir` in sync with where the Nest app and `prisma/` folder live in Git.
 
 ---
 
@@ -541,11 +829,16 @@ Verify, then hand off in plain language:
 
 - [ ] Extension installed and signed in; `.launchwithcursor/project.json` exists; `.launchwithcursor/cache/` is git-ignored.
 - [ ] `launchwithcursor.deploy.json` (legacy: `launchwithcursor.deploy.json`) at repo root lists every app to host with correct `rootDir` values.
+- [ ] **Dashboard Sync from repo** run after manifest changes; each Next service shows `apps/<name>`, not `.`.
 - [ ] Each service listens on `PORT`; build/start work or use framework defaults.
-- [ ] **pnpm:** `onlyBuiltDependencies` configured if needed (Step 4).
+- [ ] **Monorepo Nest API:** `apps/api/package.json` has a scoped `name`; `build` compiles workspace deps; manifest `startCommand` is `node dist/main.js`; migrate/seed are plain `npx prisma …` (no `cd apps/api`); **`prisma.seed` runs compiled JS** (not `ts-node`/`tsx`).
+- [ ] **Monorepo:** each service `build` compiles `packages/*` deps before nest/next build when those packages export from `dist/`.
+- [ ] **No root `postinstall: prisma generate`** when hosting Next.js + API from one repo (Prisma generate only in API build).
+- [ ] **pnpm:** `onlyBuiltDependencies` configured if needed (Step 4); root `engines.node` is `>=20` (platform uses Node 20).
 - [ ] **Database owner service:** migrate/seed commands derived from repo layout (not copied blindly); migration **files** committed to Git.
-- [ ] **Queue-backed services:** `needsRedis: true` where needed; workers use `REDIS_KEY_PREFIX` (see [Redis checklist](#redis-queues-and-job-workers-decide-per-project)).
-- [ ] `.env.example` at repo root (no secrets); managed keys omitted.
+- [ ] **Queue-backed services:** `needsRedis: true` only on services that use Redis; workers use `REDIS_KEY_PREFIX`.
+- [ ] **Env:** `NEXT_PUBLIC_*` set for production URLs; `INTERNAL_API_URL` unset on web/admin; CORS origins are full `https://` URLs with no typos.
+- [ ] `.env.example` at repo root (no secrets); managed keys and local dev port vars (`API_PORT`, `WEB_PORT`) omitted or commented as local-only.
 - [ ] Changes committed and pushed.
 
 Tell the user:
@@ -562,8 +855,8 @@ Tell the user:
    - Confirm services match the manifest (or use **Sync from repo** if hosting already exists).
    - For each service with `needsDatabase: true`, open **Database** → **Provision** Postgres or MySQL (manifest alone does not create a DB).
    - For queue/cache/session apps, open **Redis** → **Provision** (manifest alone does not create Redis).
-   - Fill **Env vars** from `.env.example`.
-   - **Deploy the api** (or whichever service owns migrations) — not only front-end services.
+   - Fill **Env vars** from `.env.example` (skip local dev port vars and platform-managed keys).
+   - **First deploy order:** provision add-ons → deploy **api** (migrations) → deploy **web** / other frontends → browser smoke test each production URL.
    - After a successful deploy, open **Database → Manage data** to confirm tables exist (not the main nav “Database” diagram, which is from code scan).
    - If the app uses job queues, open **Deploy → Redis → Queue activity** after workers start; use **Refresh** to check for stalled or failed jobs.
 
@@ -610,7 +903,7 @@ Each entry in `services`:
 | `buildCommand` | string \| null | no | `null` auto-detects. Prefer `pnpm run build` / `npm run build`, not bare framework CLIs. |
 | `startCommand` | string \| null | no | Must listen on `PORT`. `null` auto-detects. |
 | `migrateCommand` | string \| null | no | One-off command **before** container start. Runs from container WORKDIR (`/app` = repo root) unless you `cd` or pass paths. `null` if none. |
-| `seedCommand` | string \| null | no | One-off command **after** migrate, before start. Same working-directory rules as migrate. Idempotent seeds only. |
+| `seedCommand` | string \| null | no | One-off command **after** migrate, before start. Same working-directory rules as migrate. Idempotent seeds only. Nest slim: **`prisma.seed` must run compiled JS** — see [Production seeds](#production-seeds-nest-slim--pnpm-deploy). |
 | `internalPort` | number | yes | Port inside the container. Default `3000`. |
 | `needsDatabase` | boolean | yes | Intent flag only — user must still **Provision** under Deploy → Database. |
 | `needsRedis` | boolean | no | Intent flag — user must still **Provision** under Deploy → Redis. Set `true` when the app uses queues, Redis cache, or sessions. |

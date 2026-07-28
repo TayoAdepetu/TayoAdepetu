@@ -78,23 +78,25 @@ Do not start Phase 4.
 
 ---
 
-## Phase 4 — PWA + polish
+## Phase 4 — Mobile + polish
 
-**Deliverables:** Installable PWA, loading/empty/error states, mobile polish
+**Deliverables:** Mobile strategy from MVP-SPEC (PWA if spec requires it), loading/empty/error states, polish
 
 **Prompt:**
 
 ```
 Execute Phase 4:
 
-1. Implement PWA per LAUNCHWITHCURSOR/SKILLS/PWA.md on the customer-facing app
-2. Audit all screens for FRONTEND.md Rules 31 (empty/loading/error) and Rule 18 (mobile-first)
+Read MVP-SPEC.md first for mobile strategy (PWA, native, or desktop-only).
+
+1. If MVP-SPEC calls for PWA or an installable web app, implement PWA per LAUNCHWITHCURSOR/SKILLS/PWA.md on the customer-facing app. Otherwise skip PWA manifest/install work and follow the spec's mobile approach.
+2. Audit all screens for FRONTEND.md Rules 31 (empty/loading/error) and Rule 18 (mobile-first where the spec targets mobile users)
 3. Remove any placeholder lorem ipsum — use realistic copy from MVP-SPEC
 
 Do not start Phase 5.
 ```
 
-**Test:** Add to Home Screen on phone. Offline shell loads. All Must Have flows work on mobile width.
+**Test:** If PWA is in scope: Add to Home Screen on phone and confirm offline shell loads. All Must Have flows work at the widths MVP-SPEC targets.
 
 ---
 

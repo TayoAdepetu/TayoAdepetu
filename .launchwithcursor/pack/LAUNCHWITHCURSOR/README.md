@@ -24,7 +24,7 @@ Read guides in this order. Give each linked file to Cursor when the step says to
 | 3 | [METHOD/02-cursor-mastery.md](./METHOD/02-cursor-mastery.md) | How to get great results from Cursor |
 | 4 | [METHOD/03-phases-overview.md](./METHOD/03-phases-overview.md) | Phase-by-phase build + prompts |
 | 5 | [SKILLS/FRONTEND.md](./SKILLS/FRONTEND.md) | Every UI decision |
-| 6 | [SKILLS/PWA.md](./SKILLS/PWA.md) | Mobile = installable web app (not native apps) |
+| 6 | [SKILLS/PWA.md](./SKILLS/PWA.md) | When MVP-SPEC calls for an installable web app (PWA) |
 | 7 | [SKILLS/BACKEND.md](./SKILLS/BACKEND.md) | API, database, auth (NestJS) |
 | 8 | [SKILLS/Infrastructure.md](./SKILLS/Infrastructure.md) | Env vars, deploy manifest, platform rules |
 | 9 | [DEPLOY/launch-checklist.md](./DEPLOY/launch-checklist.md) | Before you go live |
@@ -41,7 +41,7 @@ Read guides in this order. Give each linked file to Cursor when the step says to
 | Database | Postgres (platform-managed) |
 | Cache / queues | Redis (platform-managed) |
 | File storage | Cloudflare R2 (platform-managed) |
-| Mobile | **PWA** — not Expo or native apps for MVP |
+| Mobile | **Defined in MVP-SPEC.md** — PWA, native, or desktop-only |
 
 ---
 

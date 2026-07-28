@@ -1,34 +1,42 @@
 # PWA Rules for Cursor AI Assistant
 
-**Default for every customer-facing MVP on LaunchWithCursor.** Mobile users get an installable web app — not a native App Store / Play Store build.
+**Use this file when MVP-SPEC.md calls for a PWA or installable web app.** Do not add PWA work if the spec says desktop-only, responsive web only, or native mobile instead.
 
-Read with [FRONTEND.md](./FRONTEND.md) Rule 3 (Mobile = PWA First).
+Read with [FRONTEND.md](./FRONTEND.md) Rule 3 (Mobile strategy follows MVP-SPEC).
 
 ---
 
 ## Core Philosophy
 
-## 1. PWA Is the MVP Mobile Strategy
+## 1. MVP-SPEC Decides; This File Implements PWA
 
-For LaunchWithCursor founders:
+**MVP-SPEC.md is the source of truth** for whether the product is:
+
+- an installable PWA
+- a responsive web app without install UX
+- a native mobile app (Expo, React Native, etc.)
+- desktop-only
+
+When the spec calls for PWA:
 
 - **Do:** Responsive web + installable PWA
-- **Do not:** Expo, React Native, or app store submission during MVP
+- **Follow:** the rules below for manifest, icons, install UX, and testing
 
-**Why:** Faster iteration, one codebase, no store review delays, same deploy pipeline as web.
+When the spec calls for native mobile, follow the spec's stack and flows — do not substitute PWA.
 
 ---
 
-## When PWA Is Required
+## When to Apply These Rules
 
-| App type | PWA required? |
-| -------- | ------------- |
-| Customer-facing Next.js / React app | **Yes** |
-| Internal admin dashboard only | Optional |
-| Marketing landing (no login) | Recommended |
+| MVP-SPEC says | Apply PWA.md? |
+| ------------- | ------------- |
+| PWA / installable web app | **Yes** |
+| Responsive web, mobile-friendly (no install) | Partial — skip install prompt; still use mobile-first UI |
+| Native mobile app | **No** — follow MVP-SPEC instead |
+| Desktop-only / internal admin | **No** unless spec asks for install UX |
 | API-only (NestJS) | No |
 
-Implement PWA in **Phase 4** before launch.
+Implement PWA in **Phase 4** only when MVP-SPEC requires it.
 
 ---
 
@@ -141,7 +149,7 @@ Serve production build via platform (`npx serve -s dist`) — manifest must be i
 
 ## After MVP (not now)
 
-When you have thousands of users and need push notifications or deep native APIs, revisit native apps. Until then, iterate on the PWA.
+When MVP-SPEC or product traction calls for capabilities beyond the current mobile strategy (e.g. push notifications, deep native APIs), update MVP-SPEC and revisit the approach.
 
 ---
 

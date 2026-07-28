@@ -10,12 +10,16 @@ Run this **before** sharing your MVP with real users.
 - [ ] `.env.example` complete — no secrets committed
 - [ ] Latest code pushed to the branch you deploy from
 - [ ] Migrations committed and applied in production
+- [ ] **Monorepo:** each `packages/*` exports from `dist/`; **api, web, and admin** build scripts compile workspace deps; all builds pass after `rm -rf packages/*/dist`
+- [ ] **Prisma:** `binaryTargets` includes `debian-openssl-3.0.x` for hosted Linux
+- [ ] **NestJS API:** deploy log shows `docker build (NestJS slim)` (not multi-GB Nixpacks)
 
 ---
 
 ## Platform (LaunchWithCursor dashboard)
 
 - [ ] All services deployed successfully (API before web in monorepos)
+- [ ] API health/docs URL returns **JSON** in browser or curl (not Traefik plain-text 404)
 - [ ] Database provisioned and tables visible under **Deploy → Database → Manage data**
 - [ ] Redis provisioned (if `needsRedis: true`)
 - [ ] R2 provisioned (if `needsStorage: true`)
@@ -28,6 +32,8 @@ Run this **before** sharing your MVP with real users.
 ---
 
 ## PWA & mobile
+
+**Apply only when MVP-SPEC.md calls for PWA or mobile install UX.**
 
 - [ ] Web app manifest loads (`/manifest.webmanifest` or Next.js manifest route)
 - [ ] Icons 192×192 and 512×512 present

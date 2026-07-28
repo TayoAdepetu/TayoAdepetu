@@ -19,6 +19,34 @@ In a monorepo:
 
 Set `needsDatabase: true` only on the API service in `launchwithcursor.deploy.json`.
 
+### Workspace packages (`packages/*`)
+
+If **any** hosted app (api, web, admin) imports `@myorg/shared`, `@myorg/types`, etc. from `packages/*`:
+
+1. Each package **`main` / `exports` → `dist/`** (never `src/`).
+2. Update **all importing apps' `build` scripts in the same commit** — not api alone:
+
+```json
+// apps/api
+"build": "prisma generate && pnpm --filter @myorg/api^... run build && nest build"
+
+// apps/web and apps/admin (when they import @myorg/*)
+"build": "pnpm --filter @myorg/web^... run build && next build"
+```
+
+3. **Verify before deploy:**
+
+```bash
+rm -rf packages/*/dist apps/api/dist apps/web/.next apps/admin/.next
+cd apps/api && pnpm run build && node dist/src/main.js
+cd ../web && pnpm run build
+cd ../admin && pnpm run build
+```
+
+NestJS does not bundle workspace deps at runtime. Next.js still needs `dist/` to exist when package exports point there — `transpilePackages` is not a substitute.
+
+See [Infrastructure.md](./Infrastructure.md) Rule 8 and SETUP.md § monorepo workspace packages.
+
 ---
 
 ## Default Stack
@@ -83,6 +111,17 @@ apps/api/src/
 - Enum types for fixed status fields
 - Soft delete only when product requires it
 
+**Generator / binaryTargets (hosted Linux):**
+
+```prisma
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+```
+
+Required for slim Docker and Nixpacks containers. Missing `debian-openssl-3.0.x` → **Query engine not found** at runtime.
+
 **Migrations:**
 
 - Commit `prisma/migrations/` to Git
@@ -93,6 +132,8 @@ apps/api/src/
 
 - Idempotent (`upsert`) — runs on every deploy
 - Dev-only data clearly separated from production seeds
+- **Hosted Nest slim (pnpm deploy):** `npx prisma db seed` runs `package.json` → `prisma.seed`. Prod images exclude devDependencies — **`prisma.seed` must invoke compiled JavaScript** (e.g. `"node dist/prisma/seed.js"`), not `ts-node` or `tsx`. Local-only scripts may still use `tsx prisma/seed.ts`.
+- Pin **`prisma`** and **`@prisma/client`** to the same exact version in `apps/api/package.json` (avoid `"^6.x"` ranges that mismatch the lockfile in Docker).
 
 ---
 
@@ -198,6 +239,8 @@ Set `TRUST_PROXY_HOPS=2` in dashboard when behind Cloudflare + platform router (
 
 ## 12. package.json Scripts
 
+NestJS uses **slim Docker automatically** when `framework: "nestjs"` in the manifest — no build strategy choice in the dashboard.
+
 ```json
 {
   "scripts": {
@@ -266,8 +309,9 @@ Backend-only phases: cite Infrastructure.md for deploy impact.
 ## Phase 1 Checklist (API exists)
 
 - [ ] `apps/api` with NestJS + Prisma scaffold
-- [ ] `prisma/schema.prisma` with initial models from MVP-SPEC
+- [ ] `prisma/schema.prisma` with initial models from MVP-SPEC; `binaryTargets` includes `debian-openssl-3.0.x`
 - [ ] `main.ts` listens on `PORT`
+- [ ] If API imports `packages/*`: each package exports from `dist/`; **api + web + admin** build scripts compile workspace deps; full verify passes after clean `packages/*/dist`
 - [ ] Manifest entry with correct `rootDir`, `migrateCommand`, `needsDatabase`
 - [ ] Root `.env.example` lists `JWT_SECRET`, `CORS_ORIGIN` (not `DATABASE_URL`)
 

@@ -126,15 +126,18 @@ See [Infrastructure.md](../SKILLS/Infrastructure.md).
 
 ---
 
-## Rule 8 — Mobile = PWA, not native
+## Rule 8 — Mobile strategy comes from MVP-SPEC
 
-If you think you need an app store app, read [PWA.md](../SKILLS/PWA.md) first.
+Read **MVP-SPEC.md** before choosing PWA, native mobile, or desktop-only.
 
-Prompt when ready:
+- If the spec calls for PWA, use [PWA.md](../SKILLS/PWA.md) and prompt:
 
 ```
-Implement PWA per LAUNCHWITHCURSOR/SKILLS/PWA.md for our customer-facing Next.js app.
+Implement PWA per LAUNCHWITHCURSOR/SKILLS/PWA.md for our customer-facing app (MVP-SPEC requires PWA).
 ```
+
+- If the spec calls for native mobile, follow the spec — do not substitute PWA.
+- If the spec is desktop-only, skip PWA install UX.
 
 ---
 
@@ -168,4 +171,4 @@ Push to GitHub before deploying.
 | Vague prompts | Reference spec + rule numbers |
 | Skipping design system page | FRONTEND.md Rule 4 — do it in Phase 1 |
 | localhost API URL in production | Use full `https://` URL in `NEXT_PUBLIC_API_URL` |
-| Expecting native mobile | PWA in Phase 4 |
+| Ignoring MVP-SPEC mobile strategy | Read MVP-SPEC first — PWA only if spec requires it |

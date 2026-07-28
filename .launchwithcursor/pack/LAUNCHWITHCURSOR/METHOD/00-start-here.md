@@ -22,9 +22,9 @@ LaunchWithCursor provides the infrastructure, AI-native development guides, best
 
 ## What kinds of products is LaunchWithCursor for?
 
-LaunchWithCursor is designed to help founders build and launch web-based MVPs quickly. These are applications that run in a web browser and work seamlessly on desktops, tablets, and mobile devices without requiring users to install a native app.
+LaunchWithCursor is designed to help founders build and launch MVPs quickly — usually web-based apps that run in a browser on desktops, tablets, and phones. **MVP-SPEC.md defines the mobile strategy** (PWA, native app, or desktop-only); the starter pack must not override it.
 
-For most startups, this is the fastest and most cost-effective way to validate an idea, gather user feedback, and reach the first customers. If your product gains traction, it can later be expanded into dedicated iOS and Android apps.
+For many startups, a web or PWA MVP is the fastest way to validate an idea. If your spec calls for native iOS/Android instead, follow MVP-SPEC — the platform still hosts web/API services; native apps may use a separate build pipeline.
 
 **Great fit for LaunchWithCursor:**
 

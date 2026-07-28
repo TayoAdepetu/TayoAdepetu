@@ -45,7 +45,7 @@ When an add-on _is_ provisioned on LaunchWithCursor, the platform injects the ke
 | `R2_BUCKET_NAME`       | Cloudflare R2        | Same as above                                             |
 | `R2_ENDPOINT`          | Cloudflare R2        | Same as above                                             |
 | `R2_PUBLIC_URL`        | Cloudflare R2        | Same as above                                             |
-| `PORT`                 | Every hosted service | Always (runtime)                                          |
+| `PORT`                 | Every hosted service | Always (runtime; set from **internalPort**, default `3000`) |
 | `NODE_ENV`             | Every hosted service | Always (runtime; platform sets `production`)              |
 | `EMAIL_API_URL`        | Platform Email       | The app sends transactional email via the platform API    |
 | `EMAIL_API_KEY`        | Platform Email       | Same as above                                             |
@@ -105,7 +105,11 @@ const port = Number(process.env.PORT) || 3000;
 await app.listen(port);
 ```
 
-Do not hard-code production ports in code. `API_PORT` / `WEB_PORT` are for local `pnpm dev` only.
+The platform injects `PORT` from each service's **internalPort** (Services tab / manifest) at deploy time. Traefik routes public hostnames to that same port inside the container.
+
+Do not hard-code production ports in code. **`API_PORT` / `WEB_PORT` / `ADMIN_PORT` are for local `pnpm dev` and legacy PM2 only** — do not add them on the PaaS Env vars page. On PaaS every service can use `internalPort: 3000`; routing is by domain, not by unique host ports.
+
+If `.env.example` lists `API_PORT=3006` etc., keep them for local dev with a comment `# local dev only — not used on LaunchWithCursor PaaS`. The dashboard import skips these keys automatically.
 
 ---
 
@@ -121,7 +125,7 @@ Set `TRUST_PROXY_HOPS` in the dashboard for rate limiting and client IP:
 
 ## 7. No Project-Owned Docker for Hosting
 
-Do not add Dockerfiles or `docker-compose` for production. LaunchWithCursor builds containers for you: **Next.js** apps use a slim standalone image; other stacks use **Nixpacks**.
+Do not add Dockerfiles or `docker-compose` for production. LaunchWithCursor builds containers for you: **Next.js** and **NestJS** use slim multi-stage Docker images; **other stacks** use Nixpacks. Build strategy is chosen automatically from each service's `framework` — there is no dashboard toggle.
 
 Optional local Docker for Postgres/MinIO is discouraged — when an add-on _is_ required, prefer platform-provisioned instances even during development so environments match.
 
@@ -140,7 +144,7 @@ import path from 'path';
 const nextConfig = {
   output: 'standalone',
   outputFileTracingRoot: path.join(__dirname, '../../'), // repo root from apps/*
-  transpilePackages: ['@myorg/ui'], // workspace packages you import
+  transpilePackages: ['@myorg/ui'], // workspace packages Next transpiles — still run pnpm --filter @myorg/web^... run build when those packages export from dist/
 };
 export default nextConfig;
 ```
@@ -153,6 +157,24 @@ Also ensure:
 - `migrateCommand` in the manifest **only** if that Next app uses a database (uncommon for marketing/admin shells; API owns DB in most monorepos)
 
 Do **not** add standalone output to Next apps that will never be deployed — only hosted Next.js services need it.
+
+---
+
+## NestJS on LaunchWithCursor
+
+## 11b. Slim Docker for hosted NestJS (Automatic)
+
+LaunchWithCursor builds NestJS APIs (`framework: "nestjs"`) as a **slim multi-stage Docker** container (~200–500 MB). Founders do **not** add a Dockerfile or choose a build strategy.
+
+Requirements (same as local):
+
+- `package.json` has `build` (`prisma generate && … && nest build` in monorepos) and production start (`node dist/main.js`)
+- `main.ts` listens on `process.env.PORT ?? 3000`
+- Monorepo workspace packages export from `dist/` and are compiled before `nest build` (Rule 8)
+- Prisma `binaryTargets` includes `debian-openssl-3.0.x` (Rule 12)
+- **Seeds:** compile `prisma/seed.ts` to JS; set `prisma.seed` to `node dist/.../seed.js` — prod deploy has no `ts-node`/`tsx` (see SETUP.md § Production seeds)
+
+Deploy log should show `docker build (NestJS slim)`. If you see multi-GB Nixpacks output on a NestJS service, confirm `framework: "nestjs"` in the manifest and redeploy.
 
 ---
 
@@ -176,6 +198,17 @@ Only list packages the project actually uses. Run `pnpm approve-builds` locally 
 
 Ensure `prisma generate` runs before the production build — e.g. `"build": "prisma generate && nest build"` in `apps/api/package.json`, not a bare `nest build` in the deploy manifest.
 
+**Prisma `binaryTargets` for hosted Linux** — in `schema.prisma`:
+
+```prisma
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+```
+
+Without `debian-openssl-3.0.x`, production may fail with **Query engine not found** inside slim Docker containers.
+
 ---
 
 ## Monorepo Shape
@@ -186,23 +219,42 @@ If the repo is a monorepo (`apps/web`, `apps/api`, `apps/admin`):
 
 - one `services[]` entry per app you host
 - skip shared `packages/*` (libraries, not runnable)
-- skip mobile (Expo/EAS) — use PWA on web instead
+- include native mobile apps in `services[]` only when MVP-SPEC defines them and you deploy that app on LaunchWithCursor
 
 Set `projectType: "monorepo"`.
+
+### Workspace packages (`packages/*`) — compile before **every** hosted service build
+
+Skip `packages/*` in the manifest (not runnable services), but **every shared package imported by api, web, or admin must be production-ready**:
+
+| Requirement | Detail |
+| ----------- | ------ |
+| `main` / `exports` | Point at `./dist/*.js` — **never** `./src/` |
+| `scripts.build` | `tsc` or equivalent — produces `dist/` (gitignored, built in Docker) |
+| **api** `build` script | `pnpm --filter @myorg/api^... run build` **before** `nest build` |
+| **web / admin** `build` script | `pnpm --filter @myorg/web^... run build` **before** `next build` |
+| Pre-deploy verify | Clean `packages/*/dist`, then build + `node dist/main.js` (api), then `next build` (web/admin) |
+
+**Failure modes:**
+
+- **web/admin deploy:** `Module not found: Can't resolve '@myorg/shared'` — fixed shared exports to `dist/` but forgot web/admin build scripts.
+- **api deploy:** build passes, then **crash-loop** — Nest loads raw `packages/*/src/*.ts`.
+
+See SETUP.md § **Monorepo — workspace packages**. Update **all** importing apps in one commit — not api alone.
 
 ---
 
 ## PWA on Hosted Frontends
 
-## 13. Customer-Facing Apps Need PWA (Phase 4)
+## 13. PWA When MVP-SPEC Requires It (Phase 4)
 
-Hosted Next.js or React apps that end users open on phones must implement PWA before launch.
+Implement PWA **only when MVP-SPEC.md calls for an installable web app or PWA.**
 
 - Follow [PWA.md](./PWA.md) — manifest, icons, install UX
 - No platform manifest changes required — PWA lives in app code
 - Re-deploy web service after changing icons or `NEXT_PUBLIC_*` assets
 
-Admin-only dashboards: PWA optional.
+If MVP-SPEC says native mobile or desktop-only, skip PWA manifest/install work unless the spec explicitly asks for it.
 
 ---
 
@@ -212,7 +264,7 @@ Admin-only dashboards: PWA optional.
 
 Root or app `package.json` must declare `"engines": { "node": ">=20" }` (or a `.nvmrc` with `20`).
 
-Monorepo API builds must account for workspace packages (`@scope/types` etc.) — verify the manifest `buildCommand` installs/builds from the repo correctly on first deploy.
+Monorepo API builds **must** compile workspace `packages/*` before `nest build`, export from `dist/`, and pass `node dist/src/main.js` after a clean build. See SETUP.md § **Monorepo — workspace packages** and Rule 8 above.
 
 ---
 
@@ -242,6 +294,9 @@ Before marking Foundation complete, confirm:
 - [ ] Root `.env.example` follows Rules 2–3 (no platform-injected keys listed; only keys the app truly needs)
 - [ ] When file storage is in scope: code uses `R2_*` names (Rule 2), not custom `STORAGE_*` aliases
 - [ ] Every **hosted** Next.js app has `output: 'standalone'` and `outputFileTracingRoot` pointing at the repo root (Rule 11)
+- [ ] NestJS API uses automatic slim Docker (`framework: "nestjs"`); deploy log shows `docker build (NestJS slim)`
+- [ ] Prisma `binaryTargets` includes `debian-openssl-3.0.x` when using Postgres (Rule 12)
+- [ ] **Monorepo with `packages/*`:** each shared package exports from `dist/`; **api, web, and admin** `build` scripts compile workspace deps before framework build; verify api (`node dist/main.js`) and each Next app (`next build`) after `rm -rf packages/*/dist`
 - [ ] **pnpm monorepos:** root `package.json` has `pnpm.onlyBuiltDependencies` for Prisma/native deps in use (Rule 12)
 - [ ] Manifest uses `buildCommand`/`startCommand: null` for Next.js, or `pnpm run *` — not bare framework CLI commands (Rule 4)
 - [ ] Hosted services listen on `PORT` (Rule 5)
