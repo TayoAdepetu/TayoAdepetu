@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Dark-mode utilities exist in markup but theme toggle was removed.
+   Scope them to a .dark ancestor so system prefers-color-scheme never
+   lightens text against our always-light backgrounds. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #0a0f1c;
