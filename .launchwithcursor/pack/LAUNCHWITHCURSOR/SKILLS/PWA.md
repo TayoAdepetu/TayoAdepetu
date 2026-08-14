@@ -2,7 +2,7 @@
 
 **Use this file when MVP-SPEC.md calls for a PWA or installable web app.** Do not add PWA work if the spec says desktop-only, responsive web only, or native mobile instead.
 
-Read with [FRONTEND.md](./FRONTEND.md) Rule 3 (Mobile strategy follows MVP-SPEC).
+Read with [frontend/README.md](./frontend/README.md) / Rule 3 in [frontend/stack-and-planning.md](./frontend/stack-and-planning.md) (Mobile strategy follows MVP-SPEC). Legacy: [FRONTEND.md](./FRONTEND.md).
 
 ---
 
@@ -77,7 +77,7 @@ Place under `public/icons/`:
 | `icon-512.png` | 512×512 | Splash / install |
 | `icon-512-maskable.png` | 512×512 | Android adaptive (safe zone centered) |
 
-Use brand colors from design tokens (FRONTEND.md Rule 5).
+Use brand colors from design tokens ([frontend/design-system.md](./frontend/design-system.md) Rule 5).
 
 ### Rule 4 — Theme color in layout
 
@@ -143,7 +143,7 @@ Serve production build via platform (`npx serve -s dist`) — manifest must be i
 - [ ] Lighthouse PWA audit: installable (score not required to be 100 for MVP)
 - [ ] Android Chrome: "Install app" appears
 - [ ] iOS Safari: Add to Home Screen → opens standalone (no browser chrome)
-- [ ] App works at 375px width with thumb-friendly tap targets (FRONTEND.md Rule 18)
+- [ ] App works at 375px width with thumb-friendly tap targets ([frontend/visual-foundation.md](./frontend/visual-foundation.md) Rule 18)
 
 ---
 

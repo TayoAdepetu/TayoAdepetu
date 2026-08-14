@@ -1,59 +1,43 @@
 # Phase-by-Phase Build Guide
 
-Each phase includes a **prompt to paste into Cursor** and **done when** criteria.
+**Preferred flow:** generate plans on [Build phases](https://launchwithcursor.com/guides/build-phases) (platform AI), pull into the repo with the extension, then implement in Cursor.
 
-Prerequisites: `MVP-SPEC.md` exists. Read [02-cursor-mastery.md](./02-cursor-mastery.md) first.
+This file documents the default phase shape (six build phases + Phase Verify). The platform may adjust scope within those phases for tiny or large MVPs, but always ends with Phase Verify.
+
+Prerequisites: `MVP-SPEC.md` exists on LaunchWithCursor. Read [02-cursor-mastery.md](./02-cursor-mastery.md).
+
+**Founder testing:** do **not** QA after every phase. Cursor self-checks done-when. You review after Phase Verify (or on staging).
 
 ---
 
 ## Phase 1 — Foundation
 
-**Deliverables:** Repo structure, design tokens, design-system page, deploy manifest, `.env.example`
+**Deliverables:** Repo structure, design tokens, design-system page (including PasswordField / FormShell samples), deploy manifest, `.env.example`
 
-**Prompt:**
+**Cursor prompt:**
 
 ```
-Read MVP-SPEC.md and create Phase 1 only.
-
-Stack (do not debate alternatives):
-- Next.js or React + Tailwind + shadcn/ui for frontend
-- NestJS + Prisma + Postgres for API if MVP-SPEC requires a separate backend
-- Monorepo with apps/web, apps/api if spec says monorepo; else single Next.js app
-
-Apply:
-- LAUNCHWITHCURSOR/SKILLS/FRONTEND.md (especially Rules 4, 5, 6, 7, 12, 18)
-- LAUNCHWITHCURSOR/SKILLS/Infrastructure.md (Rules 1-5, 11, Phase 1 checklist)
-- LAUNCHWITHCURSOR/SKILLS/BACKEND.md if API exists
-
-Create launchwithcursor.deploy.json at repo root.
-Create .env.example at repo root (no secrets, no platform-injected keys).
-Scaffold design-system page with live component samples.
-
-Write docs/plans/phase-1.md documenting what you built. Do not start Phase 2.
+Implement phase 1 from docs/plans/phase-1.md only.
+Follow AGENTS.md and SKILLS/frontend/ (design-system.md, visual-foundation.md, forms.md samples).
+Also apply SKILLS/Infrastructure.md Phase 1 checklist.
+Self-check done-when. Do not start Phase 2.
 ```
 
-**Test:** App runs locally. Design-system page renders. Manifest file exists.
-
-**Done when:** Infrastructure Phase 1 checklist is satisfied.
+**Done when:** App runs locally; design-system page renders; `launchwithcursor.deploy.json` exists.
 
 ---
 
 ## Phase 2 — Core product
 
-**Deliverables:** Must Have user flows (no auth yet — use mock data or skip protected routes)
+**Deliverables:** Must Have user flows (auth deferred unless trivial guest access)
 
-**Prompt:**
+**Cursor prompt:**
 
 ```
-Execute Phase 2 from docs/plans/phase-2.md (create the plan file first from MVP-SPEC Must Have features if missing).
-
-Build core user flows only. FRONTEND.md Rules 6, 24, 25, 31 apply.
-No authentication yet unless trivial guest access is enough.
-Do not start Phase 3.
-List manual test steps when done.
+Implement phase 2 from docs/plans/phase-2.md only.
+Apply SKILLS/frontend/ surfaces.md and ux-a11y.md as cited in the plan.
+Self-check done-when. Do not start Phase 3.
 ```
-
-**Test:** Walk through each Must Have flow in the browser.
 
 ---
 
@@ -61,61 +45,86 @@ List manual test steps when done.
 
 **Deliverables:** Sign up, login, protected routes, Prisma models, migrations
 
-**Prompt:**
+**Cursor prompt:**
 
 ```
-Execute Phase 3: authentication and database persistence.
-
-Follow LAUNCHWITHCURSOR/SKILLS/BACKEND.md for auth pattern and Prisma conventions.
-Follow Infrastructure.md for DATABASE_URL usage and migrateCommand in manifest.
-Seed command must be idempotent.
-
-Update launchwithcursor.deploy.json migrate/seed on the API service.
-Do not start Phase 4.
+Implement phase 3 from docs/plans/phase-3.md only.
+Follow SKILLS/BACKEND.md and SKILLS/frontend/forms.md (password toggles, FormShell, centered auth headings).
+Self-check done-when. Do not start Phase 4.
 ```
-
-**Test:** Create account, log in, log out, data persists after refresh.
 
 ---
 
 ## Phase 4 — Mobile + polish
 
-**Deliverables:** Mobile strategy from MVP-SPEC (PWA if spec requires it), loading/empty/error states, polish
+**Deliverables:** Mobile strategy from MVP-SPEC; empty/loading/error; realistic copy
 
-**Prompt:**
+**Cursor prompt:**
 
 ```
-Execute Phase 4:
-
-Read MVP-SPEC.md first for mobile strategy (PWA, native, or desktop-only).
-
-1. If MVP-SPEC calls for PWA or an installable web app, implement PWA per LAUNCHWITHCURSOR/SKILLS/PWA.md on the customer-facing app. Otherwise skip PWA manifest/install work and follow the spec's mobile approach.
-2. Audit all screens for FRONTEND.md Rules 31 (empty/loading/error) and Rule 18 (mobile-first where the spec targets mobile users)
-3. Remove any placeholder lorem ipsum — use realistic copy from MVP-SPEC
-
-Do not start Phase 5.
+Implement phase 4 from docs/plans/phase-4.md only.
+Read MVP-SPEC for mobile strategy. PWA only if required — SKILLS/PWA.md.
+Apply SKILLS/frontend/surfaces.md Rule 31. Self-check done-when. Do not start Phase 5.
 ```
-
-**Test:** If PWA is in scope: Add to Home Screen on phone and confirm offline shell loads. All Must Have flows work at the widths MVP-SPEC targets.
 
 ---
 
-## Phase 5 — Deploy + go live
+## Phase 5 — Deploy prep
 
-**Deliverables:** Production deploy on LaunchWithCursor
+**Deliverables:** Setup skill / manifest / env readiness for LaunchWithCursor PaaS
 
-**Steps (you + Cursor):**
-
-1. Paste this prompt into Cursor:
+**Cursor prompt:**
 
 ```
-Read launchwithcursor-setup.md and do what it says.
+Implement phase 5 from docs/plans/phase-5.md only.
+Read launchwithcursor-setup.md / SETUP and confirm deploy readiness.
+Self-check done-when. Do not start Phase 6.
 ```
 
-2. Push to GitHub
-3. Dashboard: link repo, sync manifest, provision DB/Redis/R2, env vars
-4. Deploy API → then web
-5. Run [launch-checklist.md](../DEPLOY/launch-checklist.md)
+---
+
+## Phase 6 — Launch prep
+
+**Deliverables:** Final polish items from the plan (not endless feature adds)
+
+**Cursor prompt:**
+
+```
+Implement phase 6 from docs/plans/phase-6.md only.
+Self-check done-when. Do not start Phase Verify until this phase is done.
+```
+
+---
+
+## Phase Verify — UX and quality gate (required last)
+
+**Deliverables:** Fixes only against `SKILLS/frontend/verify-checklist.md`
+
+**Cursor prompt:**
+
+```
+Execute Phase Verify from docs/plans/phase-verify.md.
+
+Read .launchwithcursor/pack/LAUNCHWITHCURSOR/SKILLS/frontend/verify-checklist.md
+and SKILLS/frontend/README.md non-negotiables.
+
+Audit the app against every checklist item. Fix only gaps.
+Do not add features. When done, list what you checked and what you changed.
+```
+
+**Done when:** Checklist items pass (password toggles, form shells, states, etc.).
+
+---
+
+## After verify
+
+1. Push to GitHub
+2. Dashboard: link repo, sync manifest, provision add-ons, env vars, Deploy
+3. Run [launch-checklist.md](../DEPLOY/launch-checklist.md)
+4. Optionally hire **one or more manual testers** on the project **QA / Testers** page:
+   - **Work as a team** — shared chat; testers see each other’s findings
+   - **Work independently** — private founder↔tester chat; peer findings hidden
+5. In Cursor: **LaunchWithCursor: Pull Test Findings** → fix from `docs/qa/*.md`
 
 **Prompt if deploy fails:**
 
@@ -128,34 +137,21 @@ Fix only what blocks deploy. Follow Infrastructure.md rules.
 
 ---
 
-## Phase 6 — Iterate
+## Path B note (existing codebase)
 
-**Deliverables:** Fixes and small improvements from real users
-
-**Prompt:**
-
-```
-User feedback: [describe issue]
-Expected: [X]
-Actual: [Y]
-
-Fix this only. Keep FRONTEND.md and BACKEND.md conventions.
-```
-
-**Rule:** Add Nice-to-Have features only after Must Have is stable in production.
+Phase plans from the platform bias toward align / gap-fill / deploy readiness. Do not treat Phase 1 as “delete the app and start over.”
 
 ---
 
-## Phase planning prompt (run once before Phase 1 code)
+## Legacy: planning inside Cursor (optional)
+
+Only if you cannot use the website generator:
 
 ```
-Read MVP-SPEC.md, LAUNCHWITHCURSOR/METHOD/03-phases-overview.md, LAUNCHWITHCURSOR/SKILLS/FRONTEND.md, LAUNCHWITHCURSOR/SKILLS/BACKEND.md, and LAUNCHWITHCURSOR/SKILLS/Infrastructure.md.
+Read MVP-SPEC.md, LAUNCHWITHCURSOR/METHOD/03-phases-overview.md,
+and SKILLS/frontend/README.md (plus BACKEND.md, Infrastructure.md).
 
-Create docs/plans/phase-1.md through phase-6.md with:
-- Goals and deliverables per phase
-- FRONTEND compliance subsection (rule numbers) per phase
-- Backend compliance subsection where applicable
-- Acceptance criteria
-
+Create docs/plans/phase-1.md through phase-6.md and docs/plans/phase-verify.md with
+goals, deliverables, frontend compliance (file + rule numbers), done-when, and Cursor prompts.
 No code — markdown plans only.
 ```

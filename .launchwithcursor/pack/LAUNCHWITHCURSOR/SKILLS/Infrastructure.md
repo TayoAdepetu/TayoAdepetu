@@ -46,7 +46,8 @@ When an add-on _is_ provisioned on LaunchWithCursor, the platform injects the ke
 | `R2_ENDPOINT`          | Cloudflare R2        | Same as above                                             |
 | `R2_PUBLIC_URL`        | Cloudflare R2        | Same as above                                             |
 | `PORT`                 | Every hosted service | Always (runtime; set from **internalPort**, default `3000`) |
-| `NODE_ENV`             | Every hosted service | Always (runtime; platform sets `production`)              |
+| `NODE_ENV`             | Every hosted service | Always (runtime; platform sets `production` for builds)   |
+| `APP_ENV`              | Every hosted service | Always (`production` or `staging` from the Deploy environment) |
 | `EMAIL_API_URL`        | Platform Email       | The app sends transactional email via the platform API    |
 | `EMAIL_API_KEY`        | Platform Email       | Same as above                                             |
 | `EMAIL_FROM_DOMAIN`    | Platform Email       | Verified sender domain (after DNS verification)           |
@@ -54,6 +55,12 @@ When an add-on _is_ provisioned on LaunchWithCursor, the platform injects the ke
 For S3/R2 clients (only when file storage is in scope): use `R2_ENDPOINT`, `R2_BUCKET_NAME`, credentials above; region is `'auto'`; `forcePathStyle: false` for R2.
 
 App-specific tuning (not platform-injected) may use separate names, e.g. `UPLOAD_URL_TTL`, `MAX_UPLOAD_BYTES` — only when uploads exist.
+
+Use `APP_ENV` (not `NODE_ENV`) when code must branch on LaunchWithCursor environment — e.g. enable debug tooling only when `APP_ENV === 'staging'`. `NODE_ENV` stays `production` so Next.js/Nest builds stay optimized.
+
+### Production vs staging (opt-in)
+
+Hosting defaults to **production**. Staging is a separate full stack (own branch, env vars, domains, DB/Redis/R2) created only when the founder clicks **Enable staging** on Deploy. Enabling staging copies user env vars from production; platform-managed keys (`DATABASE_URL`, `REDIS_*`, `R2_*`, `APP_ENV`, etc.) are not copied — provision staging add-ons separately. Staging consumes one hosting slot.
 
 ---
 

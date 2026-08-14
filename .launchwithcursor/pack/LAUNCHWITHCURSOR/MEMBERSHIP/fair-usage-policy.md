@@ -48,6 +48,7 @@ Finish or close one thread before opening a large new topic. Keeps context clear
 - Marketing, sales, or legal advice
 - 24/7 on-call production support
 - Guaranteed uptime SLAs (see platform terms)
+- **Paid manual software testing** — hire testers from the LaunchWithCursor QA marketplace (project → QA / Testers). That is a separate product from mentorship hours.
 
 ---
 

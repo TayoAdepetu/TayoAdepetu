@@ -46,10 +46,13 @@ Run this **before** sharing your MVP with real users.
 ## Product quality
 
 - [ ] Sign up / login work in production
-- [ ] Empty, loading, and error states on main screens (FRONTEND.md Rule 31)
+- [ ] Password fields have show/hide toggles (frontend/forms.md Rule 29)
+- [ ] Auth forms use a bordered FormShell; centered titles when layout is a centered card
+- [ ] Empty, loading, and error states on main screens (frontend/surfaces.md Rule 31)
 - [ ] No broken links on main flows
 - [ ] Forms validate with clear error messages
-- [ ] Primary CTA obvious on each screen (FRONTEND.md Rule 25)
+- [ ] Primary CTA obvious on each screen (frontend/ux-a11y.md Rule 25)
+- [ ] Phase Verify checklist was run (frontend/verify-checklist.md)
 
 ---
 
@@ -78,6 +81,8 @@ Walk through in production (desktop + phone):
 ## After launch
 
 - [ ] Share with 5–10 target users
+- [ ] Optionally hire one or more **manual testers** on the project **QA / Testers** page (collaborative or independent mode)
 - [ ] Log feedback in a simple doc or Notion
 - [ ] Fix critical bugs before adding Nice-to-Have features
 - [ ] Use mentorship for blockers > 2 hours — don't stay stuck
+- [ ] Manual testing marketplace is **not** mentorship — it is paid QA

@@ -1,4 +1,4 @@
-# LaunchWithCursor Method — Start Here
+# LaunchWithCursor — Start Here
 
 ## What is Cursor?
 
@@ -59,21 +59,15 @@ By focusing on a proven, AI-friendly technology stack, we help founders spend le
 - **Code visibility** — database diagram, API map, backend logic explanation, plain-English explanations
 - **Guides + Cursor rules** — opinionated stack so you don't have to make architecture decisions
 - **Technical mentorship** — get help by message when you are stuck, plus scheduled sessions ([fair usage policy](../MEMBERSHIP/fair-usage-policy.md))
+- **Manual QA marketplace** — after deploy, hire vetted testers (collaborative or independent) from the project QA page; not the same as mentorship
 
 ---
 
-## What to do today
+## Getting started
 
-### If you have no code yet
+1. **Install Cursor** from [cursor.com](https://cursor.com) if you haven't already.
+2. **Install the LaunchWithCursor extension** from the [Setup page](/setup) — it includes skills, guides, and rules.
+3. **Create a project** on the platform — name it, choose whether you're starting fresh or connecting existing code.
+4. Follow the **Playbook** inside your project to go from idea to deployed MVP.
 
-1. If you have **not** installed Cursor on your computer yet, go to **[Step 3: Cursor mastery](/guides/cursor-mastery)** and complete **Step 2: Install Cursor on your laptop** first.
-2. Go to **[Step 2: Idea to MVP spec](/guides/idea-to-spec)** and create your `MVP-SPEC.md` inside LaunchWithCursor.
-
-You do not need to read the rest of [Cursor mastery](./02-cursor-mastery.md) right away — come back to it when you start building in Cursor.
-
-### If you already have a project
-
-1. If you have **not** installed Cursor on your computer yet, go to **[Step 3: Cursor mastery](/guides/cursor-mastery)** and complete **Step 2: Install Cursor on your laptop** first.
-2. Go to **[Step 5: Platform setup](/guides/setup)** to install the extension, add the setup file, and connect your repo.
-
-You do not need to read the rest of [Cursor mastery](./02-cursor-mastery.md) right away — come back to it when you want stronger prompting habits.
+You do not need to read every skill document yourself. The extension and phase prompts point Cursor at the right rules.

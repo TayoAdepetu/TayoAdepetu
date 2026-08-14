@@ -1,0 +1,174 @@
+# **How a Random Writing Job Changed The Direction of My Life**
+
+In 2019, I was not trying to become a writer. I was just trying to make money, and there is a difference between both.
+
+At the time, I was earning at most ₦15,000 a month managing a printing house at Fajuyi Hall, Obafemi Awolowo University.
+
+My journey to that point had already been unconventional.
+
+I had spent four years in the Faculty of Pharmacy before eventually crossing over to Economics after failing a course.
+
+So, in 2019, I was not sitting around with some grand five-year plan for my life. I simply needed money.
+
+I could not get direct accommodation on campus and I did not have money to buy from those that got it. OAU people would understand what I'm saying here. So my Mum told me to go and live with a Grandma off-campus. Because I don't have money on me most of the time, I was not able to go to school most of the time. Combined with the heart-break from the Faculty of Pharmacy, little by little, a boy that used to be serious with education started looking for money by all legal means.
+
+Then one day, a friend told me that someone wanted to give him a writing job. I told him I could do it too. That was it.
+
+No elaborate career transition. No writing certification. No carefully constructed portfolio. No strategic decision to enter the content industry. I just needed money and thought, "I can probably do this."
+
+My friend connected me to the person who had the job. His name was Taiwo, and I happened to know him too.
+
+He gave me the job. And I wrote it.
+
+Before that, the closest thing I had done to professional writing was probably two or three Facebook articles about politics. So I had no business thinking that this was the beginning of a career.
+
+But something happened after I submitted the work.
+
+Taiwo sent it to his client on Upwork. The client loved it. Then the client brought more work. That was the beginning.
+
+I didn't know it then, but that random writing job was about to change the direction of my life.
+
+## **Sometimes Your Life Changes Before You Realize It Has Changed**
+
+We often imagine major turning points as dramatic moments. Maybe when you quit your job, you get admitted to university, you receive a huge investment, you meet an important person, you launch a company, or you move to another country.
+
+But some turning points don't feel like turning points when they happen. Sometimes, they look like a friend saying:
+
+"There's someone looking for a writer."
+
+And you saying:
+
+"I can do it."
+
+That's what happened to me. I wasn't looking for a career. I was looking for an opportunity to make some money.
+
+But that small opportunity exposed me to something I had never seriously considered before: I could make money online by providing a skill to people somewhere else in the world.
+
+That realization was much bigger than the first writing job itself. It changed what I believed was possible for me.
+
+## **From One Writing Job To Upwork**
+
+After that first job, I eventually created my own Upwork account before the end of 2019\.
+
+And then things began to move.
+
+I started getting writing jobs directly. I wrote for clients across different industries. I learned how proposals worked. I learned how clients thought. I learned how to communicate with people I had never met. I learned how to deliver work remotely. I learned how to build trust without sitting in the same room as the person paying me.
+
+And, perhaps most importantly, I learned that the internet could completely change the economics of where I lived.
+
+I was in Nigeria, but my market didn't have to be Nigeria. That distinction changed my life.
+
+Over the next four years, I earned more than $125,000 from freelance writing. At different points, I also employed multiple writers who worked with me.
+
+Think about how strange that sounds when you go back to where the story started. I was earning at most ₦15,000 a month managing a printing house.
+
+Then a friend told me about a writing job. I said I could do it. And a few years later, I had earned more than $125,000 from that same skill.
+
+None of this was planned. That's the part that still fascinates me.
+
+## **The Opportunity Created Another Opportunity**
+
+One of the interesting things about opportunities is that they rarely remain isolated. The writing career didn't just give me income. It changed what I was interested in.
+
+Because I and my friends constantly had a need for content writers, I started thinking about the problems surrounding freelance writing. Eventually, that contributed to the idea for AfriWrites.
+
+The idea was essentially to create an Upwork-like platform for African freelance writers. Later, as the idea evolved, it became BizGrowthHackerz, a broader platform for African freelancers.
+
+And this is where something else unexpected happened. I needed software engineers to build the platform. They started working on it. Then they got busy with more important clients (and I was and still genuinely happy for them.. they are all working with renowned companies in Nigeria today), and the project stalled.
+
+I had a choice. I could find other developers to build it or I could learn enough software engineering to build it myself. I chose the second option, and paid one of them 270k Naira to teach me PHP/Laravel for a few hours a week over four weeks.
+
+And that decision would eventually change my career again.
+
+## **The Writing Career Accidentally Introduced Me To Software Engineering**
+
+When I started learning software engineering, my original motivation was not to become a software engineer. I simply wanted to finish my own project. But something strange happened while building it. 
+
+I started spending more time coding than writing. I would spend hours debugging. I would spend hours trying to understand how different parts of the application worked, and I started enjoying the problem-solving. Some days, I could code for an absurd number of hours without realizing how much time had passed. 
+
+Meanwhile, I was supposed to be applying for content-writing jobs. But I increasingly found myself choosing code over submitting content writing proposals, and that was my signal.
+
+The writing career that had started almost accidentally had taken me somewhere I never expected. And eventually, in 2023, I made another difficult decision:
+
+I would leave freelance writing and start again in software engineering. This time, the transition was deliberate. I had already experienced what it felt like to start from almost nothing. I knew what it meant to learn something, become useful, find clients, build trust and eventually create an income from it.
+
+So I wasn't really afraid of starting again. I had evidence from my own life that starting from scratch was possible.
+
+## **Looking Back, The First Writing Job Was Much Bigger Than The Money**
+
+When I think about that first writing job today, I don't think primarily about the amount I was paid. I think about what it unlocked.
+
+It introduced me to freelancing. Freelancing introduced me to the global market. The global market gave me access to opportunities I would probably never have encountered locally.
+
+The writing business eventually led me to think about building a platform for writers. That platform forced me to learn software engineering. Software engineering eventually became a new career. And that new career has now taken me into helping people build meaningful software products and businesses.
+
+All of that can be traced back to one incredibly ordinary moment. A friend had a writing job. I needed money. I said I could do it. That's it.
+
+## **I Have Become More Suspicious of "small" Opportunities**
+
+There is something I believe now that I didn't understand in 2019\. 
+
+You don't always know what an opportunity is worth when you receive it. Sometimes the immediate value of an opportunity is obvious. Maybe you get paid, you get a promotion, you get a client, or you get a job.
+
+But sometimes the real value is hidden inside the opportunities that come after it. The first writing job wasn't particularly significant on its own. But it gave me experience. That experience gave me confidence. That confidence made me pursue more opportunities.
+
+Those opportunities gave me money. The money gave me room to experiment. The experiments introduced me to new problems. Those problems introduced me to software engineering. And software engineering eventually became another chapter of my life.
+
+The first domino didn't look impressive, but it was connected to many others.
+
+## **I Wonder What Would Have Happened If I Had Said No**
+
+This is probably the question I think about most. What if my friend had told me about the job and I had said:
+
+"I don't write."
+
+What if I had decided that writing wasn't my thing?
+
+What if I had convinced myself that I wasn't qualified because I had never professionally written before?
+
+What if I had waited until I had a certificate?
+
+What if I had looked at the opportunity and decided that it wasn't important enough?
+
+My life could have taken a completely different direction.
+
+In fact, I can still remember vividly that a few days before that day, I had gone to a construction site (they were building a petrol station just before Mayfair in Ife at the time) to look for labour work because I was just so hungry. The people working on the site looked at me and said they did not have work for me.
+
+Is it possible that I could have been so busy working as a labourer that I would not have even known about the writing opportunity?
+
+Of course, there is no way to know.
+
+Maybe another opportunity would have eventually appeared.
+
+Maybe not.
+
+But that's exactly the point.
+
+We don't know.
+
+## **You Don't Need To Know Where an Opportunity Will Take You**
+
+I think many people put unnecessary pressure on themselves to know exactly where their lives are going.
+
+They want to know whether a particular job will become a career. Whether a particular skill will make them rich. Whether a particular business idea will work. Whether a particular relationship will last. Whether a particular decision is the "right" one.
+
+But sometimes you don't get that information upfront. Sometimes you simply get an opportunity. And you have to decide whether to take the next step.
+
+## **Maybe That's The Lesson**
+
+Your next major chapter may not announce itself as a major chapter. It may look ordinary.
+
+A friend may send you a message. Someone may ask you to help with something. A client may offer you a small job. Someone may invite you into a room. You may discover a skill accidentally. You may start a project for a completely different reason. You may say yes to something because you simply need money.
+
+Don't underestimate those moments. Not every opportunity will change your life.
+
+Most won't. But you don't always know which one will.
+
+So whenever I find myself worrying too much about whether I know exactly where something is going, I remember that story.
+
+Sometimes you don't need to see the whole road.
+
+Sometimes you just need to take the next opportunity seriously.
+
+Because you never really know which small "yes" is carrying the beginning of the rest of your life.
+

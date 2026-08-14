@@ -2,7 +2,7 @@
 
 Opinionated **NestJS + Prisma + Postgres** backend rules for MVPs deployed on **LaunchWithCursor**.
 
-When creating a **project plan** or **development phases**, read and apply these rules — reference rule numbers in each backend phase (like FRONTEND.md).
+When creating a **project plan** or **development phases**, read and apply these rules — reference rule numbers in each backend phase (like `SKILLS/frontend/`).
 
 For env vars, deploy manifest, and platform add-ons, also apply [Infrastructure.md](./Infrastructure.md).
 

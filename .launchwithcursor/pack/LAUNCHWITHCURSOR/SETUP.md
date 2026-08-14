@@ -1,6 +1,6 @@
 # LaunchWithCursor Setup Skill
 
-<!-- launchwithcursor-setup-version: 0.2.11 -->
+<!-- launchwithcursor-setup-version: 0.2.13 -->
 
 > **You are an AI coding assistant (e.g. Cursor). The human asked you to "read this file and do what it says."**
 > Follow the steps below in order, top to bottom. Do the work for the user — run the commands, create the files, and explain what you did in plain language. The user is a non-engineer shipping an MVP, so keep your explanations short and friendly, and never ask them to memorize commands.
@@ -98,7 +98,7 @@ Root **`AGENTS.md`** should point to the pack (the extension creates it if missi
 
 **Do not overwrite** `MVP-SPEC.md` or `docs/plans/` when refreshing the pack.
 
-**Done when:** `.launchwithcursor/pack/LAUNCHWITHCURSOR/SKILLS/FRONTEND.md` exists and root `AGENTS.md` points to the pack.
+**Done when:** `.launchwithcursor/pack/LAUNCHWITHCURSOR/SKILLS/FRONTEND.md` (shim) and `SKILLS/frontend/README.md` exist, and root `AGENTS.md` points to the pack.
 
 ---
 
@@ -137,6 +137,7 @@ The PaaS builds each service as a container behind a router. **Next.js** and **N
 
 - **Listen on the port from the `PORT` environment variable**, defaulting to `3000`. The platform sets `PORT` from each service's **internalPort** and routes Traefik to that port. Hard-coded ports or legacy `WEB_PORT` / `API_PORT` vars will not receive traffic on PaaS.
 - **Provide a real build and start command** (or rely on the framework's standard `build`/`start` scripts).
+- **Use `APP_ENV` for environment branching** (`production` | `staging`). The platform injects it from the Deploy environment switcher. Do **not** use `NODE_ENV` for that — it stays `production` so Next.js/Nest builds stay optimized. Staging is opt-in on the dashboard (**Enable staging**); it is a separate stack and is not required for every project.
 
 ### Legacy PM2 / multi-port local dev
 

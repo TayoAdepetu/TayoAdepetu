@@ -18,8 +18,8 @@ If your MVP-SPEC does not require email in v1, skip until Phase 5 — do not ove
 ## Setup steps (dashboard)
 
 1. **Deploy → Email** → Provision email for your app
-2. **Add domain** — use the same domain users see in the browser (or a subdomain like `mail.yourapp.com`)
-3. **DNS records** — copy from the dashboard; use **Auto DNS** if your domain is on Cloudflare via the platform
+2. **Add domain** — enter an **apex domain** (`yourdomain.com`) or **subdomain** (`mail.yourdomain.com`). Use whichever matches your `From` address. A subdomain works even if another project already uses the apex on the platform.
+3. **DNS records** — copy from the dashboard; use **Add + one-click DNS** only if the zone is in Cloudflare via the platform, otherwise use **Add domain** and paste records manually
 4. **Verify domain** — wait for DNS propagation (often 15–60 minutes)
 5. **Env vars** — set SMTP/API keys the dashboard shows on the API service
 

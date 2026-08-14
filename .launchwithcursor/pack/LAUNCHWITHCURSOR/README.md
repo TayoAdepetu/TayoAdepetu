@@ -23,7 +23,7 @@ Read guides in this order. Give each linked file to Cursor when the step says to
 | 2 | [METHOD/01-idea-to-spec.md](./METHOD/01-idea-to-spec.md) | Turn your idea into a build spec (ChatGPT) |
 | 3 | [METHOD/02-cursor-mastery.md](./METHOD/02-cursor-mastery.md) | How to get great results from Cursor |
 | 4 | [METHOD/03-phases-overview.md](./METHOD/03-phases-overview.md) | Phase-by-phase build + prompts |
-| 5 | [SKILLS/FRONTEND.md](./SKILLS/FRONTEND.md) | Every UI decision |
+| 5 | [SKILLS/frontend/README.md](./SKILLS/frontend/README.md) | Every UI decision (routed skill files; legacy shim [FRONTEND.md](./SKILLS/FRONTEND.md)) |
 | 6 | [SKILLS/PWA.md](./SKILLS/PWA.md) | When MVP-SPEC calls for an installable web app (PWA) |
 | 7 | [SKILLS/BACKEND.md](./SKILLS/BACKEND.md) | API, database, auth (NestJS) |
 | 8 | [SKILLS/Infrastructure.md](./SKILLS/Infrastructure.md) | Env vars, deploy manifest, platform rules |
